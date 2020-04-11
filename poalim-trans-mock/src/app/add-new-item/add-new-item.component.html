@@ -1,3 +1,32 @@
-<p>
-  add-new-item works!
-</p>
+
+  
+   <div class="container"> 
+    <div class="row mt-3">
+        <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+            <form  #f="ngForm" (ngSubmit)="onSubmit()">
+                <div *ngFor="let item of cols; let i = index" class = "form-group">
+                    <label  [for] = "item"> {{item}} </label>
+                    <input  
+                    [placeholder]="item"
+                    type = "text" 
+                    [name] = "item" 
+                    class ="form-control"
+                    #[item]="ngModel"
+                    [(ngModel)]="rowToEdit[i]"
+                    ngModel required personName>
+                </div>
+
+                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                  <div class="btn-group mr-2" role="group" aria-label="First group">
+                  <button type= "submit" class="btn btn-success" [disabled]="!f.form.valid">Save</button>
+                  </div>
+                <div class="btn-group mr-2" role="group" aria-label="Second group">
+                 <button class="btn btn-danger"  type= "button" (click)="onClearForm()">Clear</button>
+              
+            </div>
+            </div> 
+          </form>
+      </div>
+  </div>
+</div>
+

@@ -12,7 +12,6 @@ import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
-    NgbModalModule,
     AddNewItemComponent,
     TableComponent,
     NgModalComponent,
@@ -21,9 +20,9 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
     FormsModule,
-    NgbModalModule
+    NgbModalModule,
+    HttpClientModule
   ],
   providers: [],
   entryComponents: [NgModalComponent, AddNewItemComponent, TableComponent],
