@@ -39,11 +39,13 @@ export class TableService {
       this.onEditMode = false;
     } else {
       this.rowsDetailsArr.push(row);
+      this.postService.postNewRow(row)
     }
-
+    // this.postService.postNewRow(row)
+    
     this.dataChanged.next(this.rowsDetailsArr.slice());
-    console.log("add new row and send to post in table service")
-    this.postService.postNewRow(row)
+   
+    
   }
 
   getCols() {

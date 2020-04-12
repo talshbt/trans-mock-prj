@@ -3,6 +3,7 @@ import { NgForm } from "@angular/forms";
 import { Subscription } from "rxjs";
 import {TableService} from '../shared/table.service'
 import {ModalService} from '../shared/modal.service'
+import { PostService } from '../shared/post.service';
 
 @Component({
   selector: 'app-add-new-item',
@@ -18,7 +19,7 @@ export class AddNewItemComponent implements OnInit{
     onEditMode = false;
 
 
-  constructor( private tableService: TableService,  private modalService: ModalService) { 
+  constructor( private tableService: TableService,  private modalService: ModalService, private postService: PostService) { 
     
   }
 
@@ -52,9 +53,11 @@ export class AddNewItemComponent implements OnInit{
   this.rowToEdit = [];
       this.tableService.addRow(rowDetailsObj);
       this.signupForm.reset();
-  this.tableService.onSaveData();
+      this.tableService.onSaveData();
   //  this.tableService.closeModal();
       this.modalService.openModal(this.modalService.getPrevModal(), 'xl')
+
+       
   }
 
 

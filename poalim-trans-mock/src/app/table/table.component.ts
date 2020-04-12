@@ -7,6 +7,8 @@ import { TableService } from "../shared/table.service";
 import { AddNewItemComponent } from "../add-new-item/add-new-item.component";
 import { Subscription } from "rxjs";
 import { ModalService } from '../shared/modal.service';
+import { PostService } from '../shared/post.service';
+
 // import { TableComponent } from '../table/table.component';
 
 @Component({
@@ -24,7 +26,8 @@ export class TableComponent implements OnInit, OnDestroy {
   constructor(
    
     private tableService: TableService,
-    private modalService :ModalService
+    private modalService :ModalService,
+    private postService :PostService
   ) {}
 
   ngOnInit() {
@@ -34,7 +37,9 @@ export class TableComponent implements OnInit, OnDestroy {
 
     this.cols = this.tableService.getCols();
     this.rowDetailsArr = this.tableService.getRows();
-    //  console.log(this.cols);
+
+
+  
   }
 
   ngOnDestroy() {
