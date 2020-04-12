@@ -5,38 +5,32 @@ import {
   HttpParams,
   HttpEventType
 } from "@angular/common/http";
+import { map, catchError, tap, take, exhaustMap } from "rxjs/operators";
+import { Subject, throwError } from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
+  rowsArr = [];
   private cols = ["id", "name", "email"];
-  private rows = [];
 
   constructor(private http: HttpClient) { }
-  httpData:any;
-
-  getCols(){
-     this.http.get("http://localhost:5555").subscribe(data => {
-      this.httpData=data;
-      console.log(data)
-    })
+  getCols() {
     return this.cols;
+  }yield
+
+   getRows() {
+    return this.rowsArr.slice();
   }
 
-  getRows(){
-
+  postNewRow(newRow){
+    //  for(var i = 0 ; i < this.cols.length; ++i){
+    //     newRow[this.cols[i]] = this.signupForm.value[this.cols[i]];
+    //   }
+    console.log("need to save data in db :")
+    console.log(newRow)
   }
-
-  getNewRowFromClient(){
-
-  }
-
-  private sendNewRowToDB(){
-
-  }
-
-  getRowsFromDb(){
-
-  }
-
 }
+
+
+

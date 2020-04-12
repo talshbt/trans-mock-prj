@@ -1,28 +1,36 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Subject } from "rxjs";
+import { ModalService } from './modal.service';
 import { PostService } from './post.service';
 
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams,
+  HttpEventType
+} from "@angular/common/http";
 @Injectable({
   providedIn: 'root'
 })
 export class TableService {
-  rowChanged = new Subject<any>();
+  // modalOpened = new Subject<any>();
+  dataChanged = new Subject<any>();
   saveData = new Subject<any>();
+
   rowToEdit = [];
   onEditMode = false;
   rowIndexToEdit = null;
-  componentToOpen =  new Subject<any>();
-  componentName = null;
+  // componentToOpen =  new Subject<any>();
+  // componentName = null;
   private cols = [];
   private rowsDetailsArr = [];
   componentToRender = null;
 
 
-
-  constructor(private postService: PostService) {}
-
-  
-
+  getRows(){
+    return this.rowsDetailsArr.slice();
+  }
+  constructor(private postService:PostService) {}
 
 
   addRow(row) {
@@ -33,24 +41,29 @@ export class TableService {
       this.rowsDetailsArr.push(row);
     }
 
-    this.rowChanged.next(this.rowsDetailsArr.slice());
+    this.dataChanged.next(this.rowsDetailsArr.slice());
+    console.log("add new row and send to post in table service")
+    this.postService.postNewRow(row)
   }
 
   getCols() {
+    // return this.cols;
     this.cols = this.postService.getCols();
-
     return this.cols;
   }
 
   onSaveData() {
-    this.componentName = this.getComponentName();
-    console.log(name);
-    this.saveData.next(name);
+    
+    if(this.componentToRender.name == "AddNewItemComponent"){
+     this.saveData.next();
+    }
+
+    
   }
 
   deleteRow(indexRow) {
     this.rowsDetailsArr.splice(indexRow, 1);
-    this.rowChanged.next(this.rowsDetailsArr.slice());
+    this.dataChanged.next(this.rowsDetailsArr.slice());
   }
 
   editRow(indexRow) {
@@ -75,10 +88,8 @@ export class TableService {
   }
 
   setComponentName(name){
-    console.log(name)
-    if(this.componentToRender == null){
-      this.componentToRender = name;
-    }
+    this.componentToRender = name;
+
     
   }
 
@@ -86,7 +97,11 @@ export class TableService {
     return this.componentToRender;
   }
 
-  
+
+
 
   
 }
+
+
+

@@ -2,58 +2,53 @@
 
 
 /*****************************************************************************/
-var dbController = (function() {
-  const sqlite3 = require('sqlite3').verbose();
-
-  function insertData(NoteMessage){
-
-    db.run('INSERT INTO TODONOTES (NoteMessage) VALUES (?)', [NoteMessage]);
-  
-  }
+// var dbController = (function() {
+ 
 
 
-return {
+// return {
 
 
 
-createTable: function() {
+// createTable: function() {
    
-},
-read: function (){
+// },
+// read: function (){
 
        
-      },
+//       },
 
 
       
 
-  addNewNote: function (NoteMessage){
+//   addNewNote: function (NoteMessage){
      
-  },
-  reset: function(){
+//   },
+//   reset: function(){
 
-},
+// },
 
-  deleteNote: function (id){
+//   deleteNote: function (id){
        
-    },
+//     },
 
-    deleteAll: function (){
+//     deleteAll: function (){
         
        
-    },
+//     },
  
-    update: function(NoteMessage, id){
+//     update: function(NoteMessage, id){
      
-    }
+//     }
    
   
-};
+// };
 
-})();
+// })();
 
 /*****************************************************************************/
 
+var rows = [];
 
 const bodyParser = require('body-parser');
   const express = require('express')
@@ -66,21 +61,21 @@ const bodyParser = require('body-parser');
     console.log(`App running on localhost:${PORT}`);
   });
 
-    app.get('/', function(req,res){
+  app.get('/', function(req,res){
     res.send("Welcome to Invoicing App");
   });
 
-  app.get("/createDataStorage", function(req, res) {
+  // app.get("/createDataStorage", function(req, res) {
   
-    // db = dbController.createTable();  
-    res.send("createTable Succses");
+  //   // db = dbController.createTable();  
+  //   res.send("createTable Succses");
   
-  });
+  // });
 
 
   app.post("/addData", function(req, res) {
   
-
+    res.send("createTable Succses");
     
   });
   

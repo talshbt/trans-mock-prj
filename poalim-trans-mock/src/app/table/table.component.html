@@ -1,19 +1,18 @@
   
   <div class = "container">
     <hr>
-    <div  class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1  col-md-offset-2" [ngStyle]="{'opacity':isOpen ? '0.4' : '1' }"> 
+    <div  class="col-12 " [ngStyle]="{'opacity':isOpen ? '0.4' : '1' }"> 
           <div class="row mt-3">
-              <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
   
-                <div class="form-group">
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <input class="form-control input-lg" type="text" placeholder="Search" type="text" [(ngModel)]="searchText" >
-                    </div>
-                      <button  class="btn btn-primary">Search</button>
-                    </div>
-                   </div>
-              </div>   
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-8">
+                  <input class="form-control input-lg" type="text" placeholder="Search" type="text" [(ngModel)]="searchText" >
+                </div>
+                  <button  class="btn btn-primary">Search</button>
+                </div>
+              </div>
+           
           <table class="table table-striped">
             <thead>
               <tr>
@@ -24,37 +23,32 @@
             </thead>
   
             <tbody>
+              
                 <tr *ngFor="let row of rowDetailsArr | filter: searchText; let i = index" style="cursor: pointer;">
                 <th scope="row"></th>
+              
                 <td *ngFor="let col of cols; let j = index">{{row[col]}}</td>
               <td>
-                  <div lass="btn-group" role="group" aria-label="Toolbar with button groups">
-                    <a style = "cursor:pointer" class="btn btn-default">
-                      <div class="edit" (click)="editRow(i)">
-                      </div>
-                    </a>
-                    
-                    <a style = "cursor:pointer"  class="btn btn-default">
-                      <div class="delete" (click)="onDeleteRow(i)">
-                    </div>
-                  </a>
-                </div>
+  
+                 <app-row [rowIndex] = "i" [row] = "row">
+                 
+                 </app-row>
               </td>
               </tr>
   
-              <div class = "add-btn-bottom">
-                  <button class ="btn btn-success" id="but_add" (click)="openModal()" > <a href="javascript:void(0)" class="btn btn-default">
-                      <div class="icons8-plus" >
+              <div class = "table__add-btn-bottom">
+                  <button class ="btn btn-success " id="table__add-btn-bottom--but_add" (click)="openModal()" > <a href="javascript:void(0)" class="btn btn-default">
+                      <div class="table__add-btn-bottom--icons8-plus" >
                   </div>
               </a>Add</button>
             </div>
   
             </tbody>
           </table>
-          <div class="row">
+          <!--<div class="row">
             <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
             </div>
-          </div>
+          </div>-->
           </div>
     </div>
   
@@ -62,4 +56,7 @@
    
   
           
+  
+  
+  
   

@@ -1,21 +1,28 @@
-import { Component, OnInit, ViewChild, ComponentFactoryResolver, ViewContainerRef, ComponentRef, Type } from '@angular/core';
+import { Component, OnInit, ViewChild, ComponentFactoryResolver, ViewContainerRef, ComponentRef, Type, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {TableService} from '../shared/table.service'
 import { Subscription } from "rxjs";
-import { AddNewItemComponent } from '../add-new-item/add-new-item.component';
+// import { PlaceholderDirective } from "../shared/placeholder.directive";
+// import { AddNewItemComponent } from '../add-new-item/add-new-item.component';
+import { ModalService } from '../shared/modal.service';
 
 @Component({
   selector: 'app-ng-modal',
   templateUrl: './ng-modal.component.html',
   styleUrls: ['./ng-modal.component.scss']
 })
-export class NgModalComponent implements OnInit {
+export class NgModalComponent implements OnInit, OnDestroy {
   sub: Subscription;
-  componentName = null;
+  componentToRender = null;
+  countModals = 0;
+  isNewItemClosed = false;
   @ViewChild('container', { read: ViewContainerRef }) container: ViewContainerRef;
 
 constructor(
-    private _NgbActiveModal: NgbActiveModal, private tableService: TableService, private componentFactoryResolver: ComponentFactoryResolver
+    private _NgbActiveModal: NgbActiveModal,
+     private tableService: TableService, 
+     private componentFactoryResolver: ComponentFactoryResolver, 
+    
   ) {
 
 
@@ -28,31 +35,41 @@ constructor(
   ngOnInit() {
        this.sub = this.tableService.saveData.subscribe(
        () => {
-        //  console.log("in modal componenet")
-        //   console.log(str)
+         console.log("save!!!")
          this.activeModal.close('Close click');
+         this.isNewItemClosed = true;
 
+        
       }
      )
 
-     this.componentName = this.tableService.componentName;
-     console.log(this.tableService.getComponentName())
-     var name =  this.tableService.getComponentName();
-    this.add(name);
+    
+
+    this.componentToRender = this.tableService.getComponentName();
+     this.add();
+
+    
      
   }
 
-    add(component): void {
-    var componentToRender = component;
-    // create the component factory
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.tableService.getComponentName());
+    add(): void {
+   
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.componentToRender);
 
-    // add the component to the view
     const componentRef = this.container.createComponent(componentFactory);
 
-    // pass some data to the component
-    // componentRef.instance.index = this._counter++;
+  
+
+    
   }
+
+  ngOnDestroy(){
+    this.sub.unsubscribe();
+  }
+
+  
 
 
 }
+
+

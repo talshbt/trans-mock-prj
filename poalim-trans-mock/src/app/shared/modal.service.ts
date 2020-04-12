@@ -5,26 +5,33 @@ import {
 import { TableService } from "../shared/table.service";
 import { NgModalComponent } from "../ng-modal/ng-modal.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Subject } from "rxjs";
+
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
-
-  constructor(private _NgbModal: NgbModal,
+  onClose = new Subject<any>();
+  isPrevModal = false;
+  prevModal = null;
+   constructor(private _NgbModal: NgbModal,
     private tableService: TableService
 ) { }
 
-  openModal(component) {
+
+openModal(component, size) {
+    this.setPrevModal(component)
+    ;
     this.tableService.setComponentName(component)
-    this.tableService.onSaveData();
-    // this.tableService.setComponentName("add-new-item");
+
     
     this._NgbModal.open(NgModalComponent, {
       windowClass: "modal-job-scrollable",
-      size: 'sm', 
+      size: size, 
       backdrop: 'static',
-      centered:true
-      // windowClass: 'modal-xl'
+      centered:true,
+     
+      
       
       
     });
@@ -49,9 +56,25 @@ export class ModalService {
         }
       }, 1000);
     })();
-    this.tableService.setComponentName(null)
 
+    
   }
 
 
+
+
+  setPrevModal(component){
+     if (this.prevModal == null){
+        this.isPrevModal = true;
+        this.prevModal = component
+    }
+  }
+
+  getPrevModal(){
+    return this.prevModal;
+  }
+
 }
+
+
+

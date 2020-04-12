@@ -8,6 +8,7 @@ import { NgModalComponent } from './ng-modal/ng-modal.component';
 import { FilterPipe } from './shared/filter.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { RowComponent } from './table/row/row.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { FormsModule } from '@angular/forms';
     TableComponent,
     NgModalComponent,
     FilterPipe,
+    RowComponent,
 
   ],
   imports: [

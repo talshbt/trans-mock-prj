@@ -19,6 +19,7 @@ export class TableComponent implements OnInit, OnDestroy {
   cols = [];
   rowDetailsArr = [];
   searchText: string;
+  modalClothed;
 
   constructor(
    
@@ -27,12 +28,12 @@ export class TableComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.sub = this.tableService.rowChanged.subscribe(rowDetailsArr => {
+    this.sub = this.tableService.dataChanged.subscribe(rowDetailsArr => {
       this.rowDetailsArr = rowDetailsArr;
     });
 
     this.cols = this.tableService.getCols();
-    // this.rowDetailsArr = this.tableService.getTempArr();
+    this.rowDetailsArr = this.tableService.getRows();
     //  console.log(this.cols);
   }
 
@@ -41,8 +42,8 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    this.modalService.openModal(AddNewItemComponent);
-    // this.modalService.openModal(TableComponent);
+    this.modalService.openModal(AddNewItemComponent, 'sm');
+       
   }
 
   onDeleteRow(rowIndex) {
@@ -53,3 +54,6 @@ export class TableComponent implements OnInit, OnDestroy {
     this.openModal();
   }
 }
+
+
+
