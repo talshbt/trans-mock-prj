@@ -31,6 +31,8 @@ export class TableComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+
+    this.postService.getRows();
     this.sub = this.tableService.dataChanged.subscribe(rowDetailsArr => {
       this.rowDetailsArr = rowDetailsArr;
     });

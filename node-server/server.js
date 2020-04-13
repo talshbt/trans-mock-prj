@@ -71,8 +71,8 @@ const bodyParser = require('body-parser');
 
   app.get('/', function(req,res){
       console.log(req.body)
-      res.json({ message: "Welcome to bezkoder application." });
-  
+      // res.json({ message: "Welcome to bezkoder application." });
+      res.end(JSON.stringify(rows));
   });
 
   // app.get("/createDataStorage", function(req, res) {
@@ -83,19 +83,18 @@ const bodyParser = require('body-parser');
   // });
 
 
-  app.post("/trans/", function(req, res) {
+  app.post("/addNewRow/", function(req, res) {
 
-    console.log(req.body.newRow);
-
+  console.log(req.body.newRow);
+  rows.push(req.body.newRow);
   res.setHeader('Content-Type', 'application/json');
-  res.end(JSON.stringify(req.body));
+  res.end(JSON.stringify(rows));
 
   });
 
-  app.get('/trans/:row', (request, response) => {
-    response.send("createTable Succses");
-    var row = request.params.fieldName;
-    console.log(row)
+  app.get('/getRows/', (request, response) => {
+    response.end(JSON.stringify(rows));
+
 
   });
   

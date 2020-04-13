@@ -9,7 +9,7 @@ import {tap, map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PostService {
-  rowsArr = [];
+  rows:Object[] = [];
   private cols = ["id", "name", "email"];
   baseApiURL = 'http://localhost:3128';
   condition = false;
@@ -25,51 +25,56 @@ export class PostService {
     return this.cols;
   }
 
-   getRows() {
-    return this.rowsArr.slice();
-  }
+  //  getRows() {
+  //   return this.rowsArr.slice();
+  // }
 
   postNewRow(newRow){
 
-  // let body  = JSON.stringify(newRow);
+    var response1;
+    
+    let res = this.http.post<Object[]>(this.baseApiURL + '/addNewRow/', {
+      newRow
 
-  let res = this.http.post(this.baseApiURL + '/trans/', {
-    newRow
+    })
+    .toPromise()
+    .then(response => {
+      // this.rows = response;
+      this.rows = response;
+      // console.log(response);
+      return res;    
+    })
+    .catch(e=>console.error(e));
+    
 
-  })
-  .toPromise()
-  .then(response => {
-    console.log(response);
-    return res;    
-  })
-  .catch(e=>console.error(e));
+    //  console.log(response1)
 }
 
   
+private getRowsFromServer(){
+  return this.http.get<any[]>(this.baseApiURL + '/getRows/').
+  toPromise().
+  then(response => {
+    console.log("response get all")
+    console.log(response)
+      this.rows = response;
+      // return res;    
+    });
+}
 
 
-getAll(){
+getRows(){
 
- //   console.log('getAll')
-
-  // let retObj = {
-  //   "row" : 200,
-  //   "x" : "developers"
-  // }
-
-  // let body  = JSON.stringify(retObj);
-
-  // let res = this.http.post(this.baseApiURL + '/trans/', {
-  //   body
-  //   ,
-  //   observe: 'response'
-  // })
-  // .toPromise()
-  // .then(response => {
-  //   console.log(response);
-  //   return res;    
-  // })
-  // .catch(e=>console.error(e));
+  this.getRowsFromServer();
+  // console.log(this.rows)
+  return this.rows;
+  // return this.http.get(this.baseApiURL + '/getRows/').
+  // toPromise().
+  // then(response => {
+  //   console.log("response get all")
+  //     console.log(response);
+  //     // return res;    
+  //   });
 }
 
 

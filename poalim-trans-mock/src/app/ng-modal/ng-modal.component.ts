@@ -35,7 +35,7 @@ constructor(
   ngOnInit() {
        this.sub = this.tableService.saveData.subscribe(
        () => {
-         console.log("save!!!")
+        //  console.log("save!!!")
          this.activeModal.close('Close click');
          this.isNewItemClosed = true;
 
