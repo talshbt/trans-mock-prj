@@ -28,6 +28,17 @@ export class TableService {
 
 
   getRows(){
+   // need to replace the code after the post service
+
+    this.postService.getRows().toPromise().
+    then(response => {
+      console.log("response get all")
+       console.log(response)
+        // this.rows = response;
+        // return res;    
+      });
+
+      //need to remove
     return this.rowsDetailsArr.slice();
   }
   constructor(private postService:PostService) {}
@@ -50,7 +61,14 @@ export class TableService {
   }
 
   getCols() {
-    // return this.cols;
+    
+    this.postService.getCols1().toPromise().
+    then(response => {
+       console.log(response)
+       
+      });
+
+      //need to remove
     this.cols = this.postService.getCols();
     return this.cols;
   }

@@ -49,6 +49,8 @@
 /*****************************************************************************/
 
 var rows = [];
+var cols = ["id", "name", "email"];
+
 const util = require('util');
 
 const bodyParser = require('body-parser');
@@ -98,5 +100,9 @@ const bodyParser = require('body-parser');
 
   });
   
-    
+  app.get('/getCols/', (request, response) => {
+    response.end(JSON.stringify(cols));
+
+
+  });  
     
