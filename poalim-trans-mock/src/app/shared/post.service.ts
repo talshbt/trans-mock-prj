@@ -52,22 +52,23 @@ export class PostService {
 
   
 private getRowsFromServer(){
-  return this.http.get<any[]>(this.baseApiURL + '/getRows/').
-  toPromise().
-  then(response => {
-    console.log("response get all")
-    console.log(response)
-      this.rows = response;
-      // return res;    
-    });
+  return this.http.get<any[]>(this.baseApiURL + '/getRows/')
+  // toPromise().
+  // then(response => {
+  //   console.log("response get all")
+  //   //  console.log(response)
+  //     this.rows = response;
+  //     // return res;    
+  //   });
 }
 
 
 getRows(){
+  return this.http.get<any[]>(this.baseApiURL + '/getRows/')
 
-  this.getRowsFromServer();
+  // this.getRowsFromServer();
   // console.log(this.rows)
-  return this.rows;
+  // return this.rows;
   // return this.http.get(this.baseApiURL + '/getRows/').
   // toPromise().
   // then(response => {

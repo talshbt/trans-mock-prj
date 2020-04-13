@@ -32,7 +32,15 @@ export class TableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.postService.getRows();
+    this.postService.getRows().toPromise().
+    then(response => {
+      console.log("response get all")
+       console.log(response)
+        // this.rows = response;
+        // return res;    
+      });;
+
+    
     this.sub = this.tableService.dataChanged.subscribe(rowDetailsArr => {
       this.rowDetailsArr = rowDetailsArr;
     });
