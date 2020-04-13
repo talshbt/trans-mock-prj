@@ -86,23 +86,32 @@ const bodyParser = require('body-parser');
 
 
   app.post("/addNewRow/", function(req, res) {
-
-  console.log(req.body.newRow);
-  rows.push(req.body.newRow);
-  res.setHeader('Content-Type', 'application/json');
-  res.end(JSON.stringify(rows));
+    console.log(req.body.newRow);
+    rows.push(req.body.newRow);
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(rows.slice()));
 
   });
 
   app.get('/getRows/', (request, response) => {
-    response.end(JSON.stringify(rows));
+    response.end(JSON.stringify(rows.slice()));
 
 
   });
   
   app.get('/getCols/', (request, response) => {
-    response.end(JSON.stringify(cols));
-
+    response.end(JSON.stringify(cols.slice()));
 
   });  
     
+  app.post("/removeRow/", function(req, res) {
+     console.log(req.body.index);
+    // rows.push(req.body.newRow);
+    rows.splice(req.body.index, 1);
+    console.log(this.rows);
+    // this.dataChanged.next(this.rows.slice());
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(rows.slice()));
+
+
+  });

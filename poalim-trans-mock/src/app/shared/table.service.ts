@@ -23,7 +23,7 @@ export class TableService {
   // componentToOpen =  new Subject<any>();
   // componentName = null;
   private cols = [];
-  private rowsDetailsArr = [];
+  private rows = [];
   componentToRender = null;
 
 
@@ -39,23 +39,23 @@ export class TableService {
       });
 
       //need to remove
-    return this.rowsDetailsArr.slice();
+    return this.rows.slice();
   }
   constructor(private postService:PostService) {}
 
 
   addRow(row) {
     if (this.onEditMode) {
-      this.rowsDetailsArr[this.rowIndexToEdit] = row;
+      this.rows[this.rowIndexToEdit] = row;
       this.onEditMode = false;
     } else {
-      this.rowsDetailsArr.push(row);
+      this.rows.push(row);
       this.postService.postNewRow(row)
       // console.log(row)
     }
     // this.postService.postNewRow(row)
     
-    this.dataChanged.next(this.rowsDetailsArr.slice());
+    this.dataChanged.next(this.rows.slice());
    
     
   }
@@ -64,7 +64,7 @@ export class TableService {
     
     this.postService.getCols1().toPromise().
     then(response => {
-       console.log(response)
+      //  console.log(response)
        
       });
 
@@ -83,8 +83,20 @@ export class TableService {
   }
 
   deleteRow(indexRow) {
-    this.rowsDetailsArr.splice(indexRow, 1);
-    this.dataChanged.next(this.rowsDetailsArr.slice());
+
+    this.postService.removeRow(indexRow).toPromise()
+    .then(response => {
+      // this.rows = response;
+      // this.rows = response;
+      console.log("after remove index " + indexRow)
+      console.log(response);
+      // return res;    
+    })
+    .catch(e=>console.error(e));
+
+
+    this.rows.splice(indexRow, 1);
+    this.dataChanged.next(this.rows.slice());
   }
 
   editRow(indexRow) {
@@ -92,7 +104,7 @@ export class TableService {
     this.rowIndexToEdit = indexRow;
     var rowDetails = [];
     for (var i = 0; i < this.cols.length; ++i) {
-      this.rowToEdit.push(this.rowsDetailsArr[indexRow][this.cols[i]]);
+      this.rowToEdit.push(this.rows[indexRow][this.cols[i]]);
     }
   }
 

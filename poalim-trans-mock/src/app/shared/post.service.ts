@@ -63,6 +63,28 @@ getCols1(){
 
 
 }
+
+
+removeRow(index){
+
+  var response1;
+  
+  return this.http.post<Object[]>(this.baseApiURL + '/removeRow/', {
+    index
+
+  })
+  // .toPromise()
+  // .then(response => {
+  //   // this.rows = response;
+  //   // this.rows = response;
+  //   console.log("after remove index " + index)
+  //   console.log(response);
+  //   return res;    
+  // })
+  // .catch(e=>console.error(e));
+  
+
+}
   
 
 }
