@@ -31,58 +31,11 @@ export class PostService {
 
   postNewRow(newRow){
 
-    let res = this.http.get(this.baseApiURL, {
-      params: {
-        appid: 'id1234',
-        cnt: '5'
-      },
-      observe: 'response'
-    })//.pipe(retry(1))
-    .toPromise()
-    .then(response => {
-      console.log(response);
-      return res;    
-    })
-    .catch(e=>console.error(e));
-  }
-
-  
-
-// getAll() {
-//   console.log('getAll')
-
-//   let retObj = {
-//     "row" : 200,
-//     "x" : "developers"
-//   }
-//   let res = this.http.get(this.baseApiURL + '/trans/', {
-//     body: {
-//       data: JSON.stringify(retObj)
-//     },
-//     observe: 'response'
-//   })//.pipe(retry(1))
-//   .toPromise()
-//   .then(response => {
-//     console.log(response);
-//     return res;    
-//   })
-//   .catch(e=>console.error(e));
-// }
-getAll(){
-
- //   console.log('getAll')
-
-  let retObj = {
-    "row" : 200,
-    "x" : "developers"
-  }
-
-  let body  = JSON.stringify(retObj);
+  // let body  = JSON.stringify(newRow);
 
   let res = this.http.post(this.baseApiURL + '/trans/', {
-    body
-    ,
-    observe: 'response'
+    newRow
+
   })
   .toPromise()
   .then(response => {
@@ -90,6 +43,33 @@ getAll(){
     return res;    
   })
   .catch(e=>console.error(e));
+}
+
+  
+
+
+getAll(){
+
+ //   console.log('getAll')
+
+  // let retObj = {
+  //   "row" : 200,
+  //   "x" : "developers"
+  // }
+
+  // let body  = JSON.stringify(retObj);
+
+  // let res = this.http.post(this.baseApiURL + '/trans/', {
+  //   body
+  //   ,
+  //   observe: 'response'
+  // })
+  // .toPromise()
+  // .then(response => {
+  //   console.log(response);
+  //   return res;    
+  // })
+  // .catch(e=>console.error(e));
 }
 
 

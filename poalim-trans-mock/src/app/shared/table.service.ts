@@ -40,6 +40,7 @@ export class TableService {
     } else {
       this.rowsDetailsArr.push(row);
       this.postService.postNewRow(row)
+      console.log(row)
     }
     // this.postService.postNewRow(row)
     

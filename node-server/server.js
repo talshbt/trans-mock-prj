@@ -85,7 +85,7 @@ const bodyParser = require('body-parser');
 
   app.post("/trans/", function(req, res) {
 
-    console.log(req.body);
+    console.log(req.body.newRow);
 
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify(req.body));
