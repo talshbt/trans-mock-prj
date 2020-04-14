@@ -16,24 +16,30 @@ export class TableService {
   // modalOpened = new Subject<any>();
   dataChanged = new Subject<any>();
   saveData = new Subject<any>();
-
+  rowEditTemp = new Subject<any>();
+  rowIndex = 0;
   rowToEdit = [];
+  rowToEdit2 = {};
+
   onEditMode = false;
   rowIndexToEdit = null;
   // componentToOpen =  new Subject<any>();
   // componentName = null;
   private cols = [];
   private rows = [];
+  private rows2 = [];
+
   componentToRender = null;
 
 
   getRows(){
    // need to replace the code after the post service
-
+    
     this.postService.getRows().toPromise().
     then(response => {
-      console.log("response get all")
-       console.log(response)
+      // console.log("response get all")
+        console.log(response)
+        this.rows2 = response;
         // this.rows = response;
         // return res;    
       });
@@ -48,11 +54,14 @@ export class TableService {
     if (this.onEditMode) {
       this.rows[this.rowIndexToEdit] = row;
       this.onEditMode = false;
+      this.postService.editRow(row, this.rowIndexToEdit)
     } else {
       this.rows.push(row);
-      this.postService.postNewRow(row)
-      // console.log(row)
+      // this.postService.postNewRow(row)
+      //  console.log(row)
     }
+
+    this.postService.postNewRow(row)
     // this.postService.postNewRow(row)
     
     this.dataChanged.next(this.rows.slice());
@@ -88,8 +97,8 @@ export class TableService {
     .then(response => {
       // this.rows = response;
       // this.rows = response;
-      console.log("after remove index " + indexRow)
-      console.log(response);
+      // console.log("after remove index " + indexRow)
+      // console.log(response);
       // return res;    
     })
     .catch(e=>console.error(e));
@@ -100,16 +109,50 @@ export class TableService {
   }
 
   editRow(indexRow) {
+    
+    console.log(this.rows2[indexRow])
+    this.rowToEdit2 = this.rows2[indexRow];
     this.onEditMode = true;
     this.rowIndexToEdit = indexRow;
-    var rowDetails = [];
+    // var rowDetails = [];
     for (var i = 0; i < this.cols.length; ++i) {
       this.rowToEdit.push(this.rows[indexRow][this.cols[i]]);
     }
   }
 
+
+  editRow2(){
+
+    var res = null;
+    if(this.rowIndexToEdit !== null){
+      
+      this.postService.editRow2(this.rowIndexToEdit)
+     .toPromise()
+     .then(response => {
+       res = response;
+
+      //  this.setRowToEdit(response)
+
+     }
+     )
+     .catch(e=>console.error(e));
+    }
+
+    // console.log("ress")
+   
+   
+  }
+
+  setRowToEdit(row){
+    // console.log("in set row to edit")
+    this.rowToEdit 
+     = row
+    // console.log(this.rowToEdit)
+  }
+
   getRowToEdit() {
     if (this.onEditMode) {
+      // console.log(this.rowToEdit)
       return this.rowToEdit;
     } else {
       return [];

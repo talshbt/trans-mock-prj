@@ -15,19 +15,43 @@ export class AddNewItemComponent implements OnInit{
     rowToEdit = [];
    @ViewChild("f") signupForm: NgForm;
     cols = [];
+    newCols = [];
     rowDetails = { };
     onEditMode = false;
-
+    sub: Subscription;
+     rowToEdit2 = {}
+     rowToEdit2Arr = [];
+     id = null;
 
   constructor( private tableService: TableService,  private modalService: ModalService, private postService: PostService) { 
     
   }
 
   ngOnInit() {
-   
+  
+
+    // this.tableService.editRow2()
+    
+  
     this.cols = this.tableService.getCols();
+    // console.log(this.cols)
+    this.newCols = this.cols.slice(1,this.cols.length)
     this.onEditMode = this.tableService.isEditMode();
     this.rowToEdit = this.tableService.isEditMode()? this.tableService.getRowToEdit(): [];
+
+    if(this.tableService.isEditMode()){
+      this.rowToEdit2 = this.tableService.rowToEdit2;
+      this.id = this.rowToEdit2['id']
+      this.rowToEdit2Arr = Object.values(this.rowToEdit2)
+      this.rowToEdit = this.rowToEdit2Arr.slice(1,this.rowToEdit2Arr.length)
+      console.log(this.rowToEdit)
+
+    }else{
+      this.rowToEdit2 = {}
+    }
+    //  this.rowToEdit2 = this.tableService.isEditMode()? this.tableService.rowToEdit2: {};
+
+    // console.log(this.rowToEdit2)
   }
 
 
@@ -35,22 +59,27 @@ export class AddNewItemComponent implements OnInit{
 
     
     let rowDetails = [];
+    
     let rowDetailsObj = {};
       for(var i = 0 ; i < this.cols.length; ++i){
         rowDetails.push(this.signupForm.value[this.cols[i]]);
 
       }
 
+
   rowDetailsObj = this.createObj();
   return rowDetailsObj;
   }
 
   onSubmit() {
-     
+      // console.log(this.onEditMode)
 
-  let rowDetailsObj = this.createObjToSend();
+      let rowDetailsObj = this.createObjToSend();
   
-  this.rowToEdit = [];
+      this.rowToEdit = [];
+
+      rowDetailsObj['id'] = this.onEditMode ? this.id : null;
+      // rowDetailsObj['id'] = null; 
       this.tableService.addRow(rowDetailsObj);
       this.signupForm.reset();
       this.tableService.onSaveData();
@@ -66,6 +95,7 @@ export class AddNewItemComponent implements OnInit{
         this.rowDetails[this.cols[i]] = this.signupForm.value[this.cols[i]];
       }
 
+      
       return this.rowDetails;
   }
 

@@ -21,7 +21,11 @@ export class RowComponent implements OnInit {
   }
 
   editRow() {
+    console.log("edit row of row cvompoennt")
+
     this.tableService.editRow(this.rowIndex);
+    // this.tableService.editRow2();
+
     this.modalService.openModal(AddNewItemComponent, 'sm');
   }
 

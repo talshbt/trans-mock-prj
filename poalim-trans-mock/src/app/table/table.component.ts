@@ -55,10 +55,12 @@ export class TableComponent implements OnInit, OnDestroy {
   onDeleteRow(rowIndex) {
     this.tableService.deleteRow(rowIndex);
   }
-  editRow(rowIndex) {
-    this.tableService.editRow(rowIndex);
-    this.openModal();
-  }
+  // editRow(rowIndex) {
+
+  //   console.log("edit row of table cvompoennt")
+  //   this.tableService.editRow(rowIndex);
+  //   this.openModal();
+  // }
 }
 
 

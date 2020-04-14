@@ -1,62 +1,21 @@
 
 
-
 /*****************************************************************************/
-// var dbController = (function() {
- 
-
-
-// return {
-
-
-
-// createTable: function() {
-   
-// },
-// read: function (){
-
-       
-//       },
-
-
-      
-
-//   addNewNote: function (NoteMessage){
-     
-//   },
-//   reset: function(){
-
-// },
-
-//   deleteNote: function (id){
-       
-//     },
-
-//     deleteAll: function (){
-        
-       
-//     },
- 
-//     update: function(NoteMessage, id){
-     
-//     }
-   
-  
-// };
-
-// })();
-
-/*****************************************************************************/
-
+var newRow =[];
 var rows = [];
-var cols = ["id", "name", "email"];
-
+var cols = ["id", "x", "y", "z"];
+var onEditMode = false;
+var rowIndexToEdit = null;
+var rowToEdit = [];
+var id = 0;
 const util = require('util');
 
 const bodyParser = require('body-parser');
   const express = require('express')
   const PORT = process.env.PORT || 3128;
   const app = express();
+
+
 
   app.use(bodyParser.urlencoded({extended: false}));
   app.use(bodyParser.json());
@@ -86,8 +45,41 @@ const bodyParser = require('body-parser');
 
 
   app.post("/addNewRow/", function(req, res) {
-    console.log(req.body.newRow);
-    rows.push(req.body.newRow);
+
+     
+     
+
+      // if(req.body.newRow){
+      //   console.log('newrow')
+      // }
+
+    
+
+      newRow = req.body.newRow;
+      // console.log(req.body)
+      if(newRow['id'] == null){
+        newRow['id'] = id;
+        id++;
+        console.log("add row " + id + ":")
+        // console.log(newRow)
+        rows.push(newRow);
+        console.log(rows)
+        
+      }else{
+        var ind = newRow['id'];
+        rows[ind] = newRow;
+        console.log("after edit " + ind + ":")
+        // console.log(rows[ind])
+        // console.log(rows[newRow['id']])
+        // rows[newRow['id']] = newRow;
+        console.log("edit row")
+        console.log(rows)
+
+      }
+
+      // console.log(newRow)
+      // rows.push(newRow);
+
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(rows.slice()));
 
@@ -115,3 +107,42 @@ const bodyParser = require('body-parser');
 
 
   });
+
+
+  app.post("/editRow/", function(req, res) {
+    // console.log("in edit row ")
+    // onEditMode = true;
+    // rowIndexToEdit = req.body.index;
+    // for (var i = 0; i < cols.length; ++i) {
+    //  rowToEdit.push(rows[req.body.index][cols[i]]);
+    // }
+
+    // rows[rowIndexToEdit] = newRow;
+  // console.log(req.body.index);
+  // console.log(req.body.row);
+
+  // console.log(rows[req.body.index])
+ 
+  // this.rows[req.body.index] = req.body.row;
+
+   res.setHeader('Content-Type', 'application/json');
+   res.end(JSON.stringify(rows.slice()));
+
+
+ });
+
+
+ app.post("/editRow2/", function(req, res) {
+
+
+console.log(req.body.index);
+
+console.log(rows[req.body.index])
+
+// this.rows[req.body.index] = req.body.row;
+
+ res.setHeader('Content-Type', 'application/json');
+ res.end(JSON.stringify(rows[req.body.index]));
+
+
+});

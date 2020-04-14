@@ -10,7 +10,7 @@ import {tap, map} from 'rxjs/operators';
 })
 export class PostService {
   rows:Object[] = [];
-  private cols = ["id", "name", "email"];
+  private cols = [ "id", "x", "y", "z"];
   baseApiURL = 'http://localhost:3128';
   condition = false;
 
@@ -31,10 +31,11 @@ export class PostService {
 
   postNewRow(newRow){
 
-    var response1;
+    // console.log(newRow)
     
     let res = this.http.post<Object[]>(this.baseApiURL + '/addNewRow/', {
       newRow
+      
 
     })
     .toPromise()
@@ -66,8 +67,6 @@ getCols1(){
 
 
 removeRow(index){
-
-  var response1;
   
   return this.http.post<Object[]>(this.baseApiURL + '/removeRow/', {
     index
@@ -83,6 +82,37 @@ removeRow(index){
   // })
   // .catch(e=>console.error(e));
   
+
+}
+
+editRow(row, index){
+  console.log(index)
+    
+    let res =  this.http.post<Object[]>(this.baseApiURL + '/editRow/', {
+      row,
+      index
+      
+
+    })
+    .toPromise()
+    .then(response => {
+      // this.rows = response;
+      this.rows = response;
+      // console.log(response);
+      return res;    
+    })
+    .catch(e=>console.error(e));
+}
+
+
+editRow2(index){
+   
+  return this.http.post<any>(this.baseApiURL + '/editRow2/', {
+   
+    index
+    
+
+  })
 
 }
   
