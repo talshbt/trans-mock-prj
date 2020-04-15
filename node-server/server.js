@@ -46,37 +46,10 @@ const bodyParser = require('body-parser');
 
   app.post("/addNewRow/", function(req, res) {
 
-     
-     
-
-      // if(req.body.newRow){
-      //   console.log('newrow')
-      // }
-
-    
 
       newRow = req.body.newRow;
-      // console.log(req.body)
-      if(newRow['id'] == null){
-        newRow['id'] = id;
-        id++;
-        // console.log("add row " + id + ":")
-        // console.log(newRow)
-        rows.push(newRow);
-        // console.log(rows)
-        
-      }else{
-        var ind;
-        // console.log(ind)
-        const result = rows.filter( row => row.id===  newRow['id']);
-        ind = rows.indexOf(result[0])
-        rows[ind] = newRow;
-        console.log(rows)
+      editRow(newRow);
 
-      }
-
-      // console.log(newRow)
-      // rows.push(newRow);
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(rows.slice()));
@@ -95,17 +68,31 @@ const bodyParser = require('body-parser');
   });  
     
   app.post("/removeRow/", function(req, res) {
+
      console.log(req.body.index);
-    // rows.push(req.body.newRow);
     rows.splice(req.body.index, 1);
     console.log(this.rows);
-    // this.dataChanged.next(this.rows.slice());
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(rows.slice()));
 
 
   });
 
+
+  function editRow(newRow){
+    if(newRow['id'] == null){
+      newRow['id'] = id;
+      id++;
+      rows.push(newRow);
+    }else{
+      var ind;
+      const result = rows.filter( row => row.id===  newRow['id']);
+      ind = rows.indexOf(result[0])
+      rows[ind] = newRow;
+      console.log(rows)
+
+    }
+  }
 
 //   app.post("/editRow/", function(req, res) {
 //     // console.log("in edit row ")
