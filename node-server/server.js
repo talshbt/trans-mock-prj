@@ -60,19 +60,17 @@ const bodyParser = require('body-parser');
       if(newRow['id'] == null){
         newRow['id'] = id;
         id++;
-        console.log("add row " + id + ":")
+        // console.log("add row " + id + ":")
         // console.log(newRow)
         rows.push(newRow);
-        console.log(rows)
+        // console.log(rows)
         
       }else{
-        var ind = newRow['id'];
+        var ind;
+        // console.log(ind)
+        const result = rows.filter( row => row.id===  newRow['id']);
+        ind = rows.indexOf(result[0])
         rows[ind] = newRow;
-        console.log("after edit " + ind + ":")
-        // console.log(rows[ind])
-        // console.log(rows[newRow['id']])
-        // rows[newRow['id']] = newRow;
-        console.log("edit row")
         console.log(rows)
 
       }
@@ -109,40 +107,40 @@ const bodyParser = require('body-parser');
   });
 
 
-  app.post("/editRow/", function(req, res) {
-    // console.log("in edit row ")
-    // onEditMode = true;
-    // rowIndexToEdit = req.body.index;
-    // for (var i = 0; i < cols.length; ++i) {
-    //  rowToEdit.push(rows[req.body.index][cols[i]]);
-    // }
+//   app.post("/editRow/", function(req, res) {
+//     // console.log("in edit row ")
+//     // onEditMode = true;
+//     // rowIndexToEdit = req.body.index;
+//     // for (var i = 0; i < cols.length; ++i) {
+//     //  rowToEdit.push(rows[req.body.index][cols[i]]);
+//     // }
 
-    // rows[rowIndexToEdit] = newRow;
-  // console.log(req.body.index);
-  // console.log(req.body.row);
+//     // rows[rowIndexToEdit] = newRow;
+//   // console.log(req.body.index);
+//   // console.log(req.body.row);
 
-  // console.log(rows[req.body.index])
+//   // console.log(rows[req.body.index])
  
-  // this.rows[req.body.index] = req.body.row;
+//   // this.rows[req.body.index] = req.body.row;
 
-   res.setHeader('Content-Type', 'application/json');
-   res.end(JSON.stringify(rows.slice()));
-
-
- });
+//    res.setHeader('Content-Type', 'application/json');
+//    res.end(JSON.stringify(rows.slice()));
 
 
- app.post("/editRow2/", function(req, res) {
+//  });
 
 
-console.log(req.body.index);
-
-console.log(rows[req.body.index])
-
-// this.rows[req.body.index] = req.body.row;
-
- res.setHeader('Content-Type', 'application/json');
- res.end(JSON.stringify(rows[req.body.index]));
+//  app.post("/editRow2/", function(req, res) {
 
 
-});
+// console.log(req.body.index);
+
+// console.log(rows[req.body.index])
+
+// // this.rows[req.body.index] = req.body.row;
+
+//  res.setHeader('Content-Type', 'application/json');
+//  res.end(JSON.stringify(rows[req.body.index]));
+
+
+// });
