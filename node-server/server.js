@@ -36,33 +36,28 @@ const bodyParser = require('body-parser');
       res.end(JSON.stringify(rows));
   });
 
-  // app.get("/createDataStorage", function(req, res) {
-  
-  //   // db = dbController.createTable();  
-  //   res.send("createTable Succses");
-  
-  // });
 
 
   app.post("/addNewRow/", function(req, res) {
 
+    res.setHeader('Content-Type', 'application/json');
 
       newRow = req.body.newRow;
+
 
       if(newRow['id'] == null){
         newRow['id'] = id;
         id++;
         rows.push(newRow);
+        res.end(JSON.stringify({"id":newRow['id'],"status":true,"action":"add"}));
+
       }else{
         editRow(newRow);
+        res.end(JSON.stringify({"id":newRow.id,"status":true,"action":"edit"}));
+
       }
-
-      console.log(rows)
-      
-
-
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(rows.slice()));
+     
+      console.log(rows);
 
   });
 
@@ -82,10 +77,12 @@ const bodyParser = require('body-parser');
    
     var rowToRemove =  req.body.rowToRemove;
     var ind2 = findIndex(rowToRemove);
-    console.log(ind2)
+    // console.log(ind2)
     rows.splice(ind2, 1);
-    console.log(rows);
-    res.end(JSON.stringify(rows.slice()));
+    // console.log(rows);
+    res.end(JSON.stringify({"status":true,"action":"delete"}));
+
+    // res.end(JSON.stringify(rows.slice()));
 
 
   });
@@ -99,6 +96,7 @@ const bodyParser = require('body-parser');
       rows[ind] = newRow;
       console.log(rows)
 
+      //todo : whats happend if ID not exists?
     
   }
 

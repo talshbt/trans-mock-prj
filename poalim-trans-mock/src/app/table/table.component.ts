@@ -31,15 +31,16 @@ export class TableComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-
+ 
     this.sub = this.tableService.dataChanged.subscribe(rowDetailsArr => {
       this.rowDetailsArr = rowDetailsArr;
     });
 
     this.cols = this.tableService.getCols();
-    this.rowDetailsArr = this.tableService.getRows();
-
-
+    
+    this.postService.getRows()
+    .toPromise()
+    .then(res => this.rowDetailsArr = res)
   
   }
 
@@ -55,13 +56,9 @@ export class TableComponent implements OnInit, OnDestroy {
   onDeleteRow(rowIndex) {
     this.tableService.deleteRow(rowIndex);
   }
-  // editRow(rowIndex) {
+ 
+ }
 
-  //   console.log("edit row of table cvompoennt")
-  //   this.tableService.editRow(rowIndex);
-  //   this.openModal();
-  // }
-}
 
 
 

@@ -31,21 +31,14 @@ export class PostService {
 
   postNewRow(newRow){
 
-    // console.log(newRow)
+     //console.log(newRow)
     
-    let res = this.http.post<Object[]>(this.baseApiURL + '/addNewRow/', {
+    return  this.http.post<Object[]>(this.baseApiURL + '/addNewRow/', {
       newRow
       
 
     })
-    .toPromise()
-    .then(response => {
-      // this.rows = response;
-      this.rows = response;
-      // console.log(response);
-      return res;    
-    })
-    .catch(e=>console.error(e));
+    
     
 
 }
@@ -88,7 +81,7 @@ removeRow(rowToRemove){
 editRow(row, index){
   console.log(index)
     
-    let res =  this.http.post<Object[]>(this.baseApiURL + '/editRow/', {
+    let res =  this.http.post<Object[]>(this.baseApiURL + '/addNewRow/', {
       row,
       index
       
