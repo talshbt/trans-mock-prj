@@ -48,7 +48,17 @@ const bodyParser = require('body-parser');
 
 
       newRow = req.body.newRow;
-      editRow(newRow);
+
+      if(newRow['id'] == null){
+        newRow['id'] = id;
+        id++;
+        rows.push(newRow);
+      }else{
+        editRow(newRow);
+      }
+
+      console.log(rows)
+      
 
 
     res.setHeader('Content-Type', 'application/json');
@@ -69,10 +79,12 @@ const bodyParser = require('body-parser');
     
   app.post("/removeRow/", function(req, res) {
 
-     console.log(req.body.index);
-    rows.splice(req.body.index, 1);
-    console.log(this.rows);
-    res.setHeader('Content-Type', 'application/json');
+   
+    var rowToRemove =  req.body.rowToRemove;
+    var ind2 = findIndex(rowToRemove);
+    console.log(ind2)
+    rows.splice(ind2, 1);
+    console.log(rows);
     res.end(JSON.stringify(rows.slice()));
 
 
@@ -80,18 +92,19 @@ const bodyParser = require('body-parser');
 
 
   function editRow(newRow){
-    if(newRow['id'] == null){
-      newRow['id'] = id;
-      id++;
-      rows.push(newRow);
-    }else{
+  
       var ind;
-      const result = rows.filter( row => row.id===  newRow['id']);
+      const result = rows.filter( row => row.id ===  newRow['id']);
       ind = rows.indexOf(result[0])
       rows[ind] = newRow;
       console.log(rows)
 
-    }
+    
+  }
+
+  function findIndex(rowChanged){
+    const result = rows.filter( row => row.id===  rowChanged['id']);
+    return rows.indexOf(result[0]);
   }
 
 //   app.post("/editRow/", function(req, res) {

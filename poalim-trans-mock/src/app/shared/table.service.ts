@@ -93,7 +93,9 @@ export class TableService {
 
   deleteRow(indexRow) {
 
-    this.postService.removeRow(indexRow).toPromise()
+    var rowToRemove = this.rows2[indexRow];
+    console.log(rowToRemove)
+    this.postService.removeRow(rowToRemove).toPromise()
     .then(response => {
       // this.rows = response;
       // this.rows = response;

@@ -66,10 +66,10 @@ getCols1(){
 }
 
 
-removeRow(index){
+removeRow(rowToRemove){
   
   return this.http.post<Object[]>(this.baseApiURL + '/removeRow/', {
-    index
+    rowToRemove
 
   })
   // .toPromise()
