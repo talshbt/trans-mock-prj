@@ -20,7 +20,7 @@ export class AddNewItemComponent implements OnInit{
     onEditMode = false;
     sub: Subscription;
      rowToEdit2 = {}
-     rowToEdit2Arr = [];
+     rowValues = [];
      id = null;
 
   constructor( private tableService: TableService,  private modalService: ModalService, private postService: PostService) { 
@@ -37,29 +37,24 @@ export class AddNewItemComponent implements OnInit{
     // console.log(this.cols)
     this.newCols = this.cols.slice(1,this.cols.length)
     this.onEditMode = this.tableService.isEditMode();
-    this.rowToEdit = this.tableService.isEditMode()? this.tableService.getRowToEdit(): [];
+    // this.rowToEdit = this.tableService.isEditMode()? this.tableService.getRowToEdit(): [];
 
     if(this.tableService.isEditMode()){
-      console.log("in edit mode")
-      this.rowToEdit2 = this.tableService.rowToEdit2;
+      this.rowToEdit2 = this.tableService.currentRow;
       this.id = this.rowToEdit2['id']
-      this.rowToEdit2Arr = Object.values(this.rowToEdit2)
-      this.rowToEdit = this.rowToEdit2Arr.slice(1,this.rowToEdit2Arr.length)
+      this.rowValues = Object.values(this.rowToEdit2)
+      this.rowToEdit = this.rowValues.slice(1,this.rowValues.length)
 
     }else{
       this.rowToEdit2 = {}
     }
-    //  this.rowToEdit2 = this.tableService.isEditMode()? this.tableService.rowToEdit2: {};
 
-    // console.log(this.rowToEdit2)
   }
 
 
   private createObjToSend(){
 
-    
     let rowDetails = [];
-    
     let rowDetailsObj = {};
       for(var i = 0 ; i < this.cols.length; ++i){
         rowDetails.push(this.signupForm.value[this.cols[i]]);
@@ -79,11 +74,9 @@ export class AddNewItemComponent implements OnInit{
       this.rowToEdit = [];
 
       rowDetailsObj['id'] = this.onEditMode ? this.id : null;
-      // rowDetailsObj['id'] = null; 
       this.tableService.addRow(rowDetailsObj);
       this.signupForm.reset();
       this.tableService.onSaveData();
-  //  this.tableService.closeModal();
       this.modalService.openModal(this.modalService.getPrevModal(), 'xl')
 
        

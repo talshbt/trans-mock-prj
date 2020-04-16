@@ -17,11 +17,10 @@ export class RowComponent implements OnInit {
   }
 
   onDeleteRow() {
-    this.tableService.deleteRow(this.row.id);
+    this.tableService.deleteRow(this.row);
   }
 
   editRow() {
-    console.log("edit row of row cvompoennt")
 
     this.tableService.editRow(this.row);
     this.modalService.openModal(AddNewItemComponent, 'sm');
