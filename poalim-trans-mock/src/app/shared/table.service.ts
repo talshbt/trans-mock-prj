@@ -14,11 +14,9 @@ import {
 })
 export class TableService {
   // modalOpened = new Subject<any>();
-  dataChanged = new Subject<any>();
+  // dataChanged = new Subject<any>();
   dataChanged2 = new Subject<any>();
-
   saveData = new Subject<any>();
-  rowEditTemp = new Subject<any>();
   rowIndex = 0;
   rowToEdit = [];
   rowToEdit2 = {};
@@ -37,7 +35,7 @@ export class TableService {
     
     this.postService.getRows().toPromise().
     then(response => {
-        console.log("getRows",response)
+        // console.log("getRows",response)
         this.rows2 = response;  
         
 
@@ -51,7 +49,7 @@ export class TableService {
     let x = this.getRows;
      this.postService.postNewRow(row).toPromise()
      .then(function(res){
-       console.log(res)
+      //  console.log(res)
       x();
      }).catch(e=>console.error(e));
      ;
@@ -82,7 +80,7 @@ export class TableService {
   deleteRow(indexRow) {
 
     var rowToRemove = this.rows2[indexRow];
-    console.log(rowToRemove)
+    // console.log(rowToRemove)
     this.postService.removeRow(rowToRemove).toPromise()
     .then(response => {
       this.getRows();
@@ -90,18 +88,18 @@ export class TableService {
     .catch(e=>console.error(e));
 
 
-    this.rows2.splice(indexRow, 1);
-    this.dataChanged.next(this.rows2.slice());
+    // this.rows2.splice(indexRow, 1);
+    // this.dataChanged.next(this.rows2.slice());
   }
 
   editRow(row) {
     
     // console.log(this.rows2[indexRow])
-    let indexRow = row.id;
-
-    let rowToEdit2 = this.rows2.filter( row => row.id ===  indexRow);
-
-    console.dir(rowToEdit2);
+    let indexId = row.id;
+    let currentRow = this.rows2.filter( row => row.id ===  indexId);
+     this.rowToEdit2 = currentRow[0];
+    let indexRow = this.rows2.indexOf(this.rowToEdit2)
+    // console.dir(this.rowToEdit2[0]);
     
     
     this.onEditMode = true;

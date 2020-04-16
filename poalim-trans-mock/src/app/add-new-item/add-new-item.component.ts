@@ -40,11 +40,11 @@ export class AddNewItemComponent implements OnInit{
     this.rowToEdit = this.tableService.isEditMode()? this.tableService.getRowToEdit(): [];
 
     if(this.tableService.isEditMode()){
+      console.log("in edit mode")
       this.rowToEdit2 = this.tableService.rowToEdit2;
       this.id = this.rowToEdit2['id']
       this.rowToEdit2Arr = Object.values(this.rowToEdit2)
       this.rowToEdit = this.rowToEdit2Arr.slice(1,this.rowToEdit2Arr.length)
-      console.log(this.rowToEdit)
 
     }else{
       this.rowToEdit2 = {}
