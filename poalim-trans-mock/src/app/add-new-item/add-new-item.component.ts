@@ -19,6 +19,8 @@ export class AddNewItemComponent implements OnInit{
     rowDetails = { };
     onEditMode = false;
     sub: Subscription;
+    gotColsSub: Subscription;
+
      rowToEdit2 = {}
      rowValues = [];
      id = null;
@@ -28,16 +30,16 @@ export class AddNewItemComponent implements OnInit{
   }
 
   ngOnInit() {
-  
-
-    // this.tableService.editRow2()
-    
-  
-    this.cols = this.tableService.getCols();
-    // console.log(this.cols)
-    this.newCols = this.cols.slice(1,this.cols.length)
+    // this.tableService.initTable();
+    this.gotColsSub = this.tableService.gotCols.subscribe(cols => {
+      console.log("get cols")
+   
+      this.cols = cols;
+      this.newCols = this.cols.slice(1,this.cols.length)
+      console.log(this.newCols)
+    });
+    // this.newCols = this.cols.slice(1,this.cols.length)
     this.onEditMode = this.tableService.isEditMode();
-    // this.rowToEdit = this.tableService.isEditMode()? this.tableService.getRowToEdit(): [];
 
     if(this.tableService.isEditMode()){
       this.rowToEdit2 = this.tableService.currentRow;

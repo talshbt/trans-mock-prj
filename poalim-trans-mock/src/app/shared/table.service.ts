@@ -15,17 +15,21 @@ import {
 export class TableService {
 
   dataChanged2 = new Subject<any>();
+  gotCols = new Subject<any>();
+
+  //for modal
   saveData = new Subject<any>();
   rowIndex = 0;
   currentRow = {};
-
+  
   private onEditMode = false;
-
   private cols = [];
   private rows = [];
-
   componentToRender = null;
 
+  initCols(){
+    this.getCols();
+  }
 
    getRows = () => {
     
@@ -35,6 +39,16 @@ export class TableService {
         
       }).then(data => this.dataChanged2.next(this.rows));
 
+  }
+
+  getCols = () => {
+    
+    this.postService.getCols().toPromise().
+    then(response => {
+        this.cols = response;  
+        console.log(response)
+        
+      }).then(data => this.gotCols.next(this.cols));
   }
   constructor(private postService:PostService) {}
 
@@ -49,11 +63,7 @@ export class TableService {
 
   }
 
-  getCols() {
-    
-    this.cols = this.postService.getCols();
-    return this.cols;
-  }
+
 
   onSaveData() {
     
@@ -82,7 +92,6 @@ export class TableService {
     let currentRow = this.rows.filter( row => row.id ===  indexId);
     this.currentRow = currentRow[0];
     let indexRow = this.rows.indexOf(this.currentRow)
-  
     this.onEditMode = true;
   
   }

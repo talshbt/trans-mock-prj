@@ -1,16 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
-import { HttpErrorResponse} from '@angular/common/http';
-import {tap, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
   rows:Object[] = [];
-  private cols = [ "id", "x", "y", "z"];
   baseApiURL = 'http://localhost:3128';
   condition = false;
 
@@ -21,8 +16,10 @@ export class PostService {
 
   }  
   constructor(private http: HttpClient) { }
+
   getCols() {
-    return this.cols;
+    return this.http.get<any[]>(this.baseApiURL + '/getCols/')
+
   }
 
   //  getRows() {

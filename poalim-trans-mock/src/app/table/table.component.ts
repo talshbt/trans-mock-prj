@@ -17,7 +17,9 @@ import { PostService } from '../shared/post.service';
   styleUrls: ["./table.component.scss"]
 })
 export class TableComponent implements OnInit, OnDestroy {
-  sub: Subscription;
+  dataChangedSub: Subscription;
+  gotColsSub: Subscription;
+
   cols = [];
   rowDetailsArr = [];
   searchText: string;
@@ -31,12 +33,16 @@ export class TableComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
- 
-    this.sub = this.tableService.dataChanged2.subscribe(rowDetailsArr => {
-      this.rowDetailsArr = rowDetailsArr;
+    this.tableService.initCols();
+    this.dataChangedSub = this.tableService.dataChanged2.subscribe(rows => {
+      this.rowDetailsArr = rows;
     });
 
-    this.cols = this.tableService.getCols();
+    this.gotColsSub = this.tableService.gotCols.subscribe(cols => {
+      this.cols = cols;
+    });
+
+    // this.cols = this.tableService.getCols();
     
     this.postService.getRows()
     .toPromise()
@@ -45,10 +51,11 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.dataChangedSub.unsubscribe();
   }
 
   openModal() {
+    this.tableService.initCols();
     this.modalService.openModal(AddNewItemComponent, 'sm');
        
   }

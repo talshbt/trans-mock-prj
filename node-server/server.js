@@ -43,8 +43,6 @@ const bodyParser = require('body-parser');
     res.setHeader('Content-Type', 'application/json');
 
       newRow = req.body.newRow;
-
-
       if(newRow['id'] == null){
         newRow['id'] = id;
         id++;

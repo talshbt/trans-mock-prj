@@ -22,6 +22,8 @@ export class RowComponent implements OnInit {
 
   editRow() {
 
+    this.tableService.initCols();
+
     this.tableService.editRow(this.row);
     this.modalService.openModal(AddNewItemComponent, 'sm');
   }
