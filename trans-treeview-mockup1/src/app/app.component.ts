@@ -5,13 +5,25 @@ import { TransService } from "./shared/trans.service";
 import { TransDetails } from "./shared/trans-details.model";
 import { ViewContainerRef, Component, Injector, ComponentFactoryResolver, ComponentRef, ReflectiveInjector,  OnInit } from '@angular/core';
 import { TransTreeViewComponent } from './trans-tree-view/trans-tree-view.component';
+import { DataStorageService } from "./data-storage.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent{
+export class AppComponent implements OnInit{
+
+  constructor(private dataStorage:DataStorageService){}
+  ngOnInit(): void {
+    // this.dataStorage.getTree('name').toPromise().then(data => {
+
+    //   console.log(data)
+
+    // })
+
+  
+  }
   // constructor(private cfr: ComponentFactoryResolver,
   //   private vc: ViewContainerRef) {
 

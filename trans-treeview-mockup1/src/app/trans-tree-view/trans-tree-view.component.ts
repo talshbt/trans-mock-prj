@@ -32,8 +32,13 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
         this.tatSherutName = data.tatSherutName;
 
 
-        this.restApi.getArr('luAnc1ServerData', null).subscribe((data: {}) => {
-          this.arr = data;
+        // this.restApi.getArr('luAnc1ServerData', null).subscribe((data: {}) => {
+        //   this.arr = data;
+        // })
+
+
+        this.transService.getTreeEvent.subscribe(tree=>{
+          this.arr = tree;
         })
 
 
@@ -46,10 +51,8 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
 
 
 
-    this.restApi.getArr(this.transName, null).subscribe((data: {}) => {
-
-      this.arr = data;
-
+    this.transService.getTreeEvent.subscribe(tree=>{
+      this.arr = tree;
     })
 
 

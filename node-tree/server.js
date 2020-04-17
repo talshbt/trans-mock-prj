@@ -42,7 +42,7 @@ app.get('/trans/:fieldName', (request, response) => {
     parser.parseString(data, function (err, result) {
            
         function getXmlfields(fieldName){
-          console.log("fieldName = " + fieldName)
+        //   console.log("fieldName = " + fieldName)
 
             var myResultArr = [];
             // var x;
@@ -78,7 +78,7 @@ app.get('/trans/:fieldName', (request, response) => {
        arr =getXmlfields(fieldName);
       // arr = util.inspect(dict, {showHidden: false, depth: null});
 
-        // console.log(dict)
+         console.log(dict)
 
         
 
