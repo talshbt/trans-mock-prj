@@ -21,8 +21,10 @@ export class TransInputComponent {
   onSubmit(form: NgForm) {
 
     const transDetails = this.setTransDetails(form);
+
+    console.log(form.value.transName)
     this.handleTreeComponent(transDetails);
-    this.transService.getTree('name')
+    this.transService.getTree(form.value.transName)
     form.reset();
   }
 

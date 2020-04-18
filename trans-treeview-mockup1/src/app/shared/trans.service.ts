@@ -33,7 +33,7 @@ export class TransService {
 
 
   getTree(fieldName){
-    this.dataStorage.getTree('name').toPromise().then(data => {
+    this.dataStorage.getTree(fieldName).toPromise().then(data => {
 
       this.tree = data;
 
