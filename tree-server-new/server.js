@@ -2,7 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express')
 const fetch = require('node-fetch');
 const xml2js = require('xml2js');
-var fs = require('fs')
+var fs = require('fs').promises
 const PORT = process.env.PORT || 7777;
 const app = express();
 var parser = new xml2js.Parser();
@@ -89,9 +89,12 @@ app.post("/getTree/", function(req, res) {
     res.setHeader('Content-Type', 'application/json');
 
       var fieldName = req.body.fieldName;
-      parseXml(fieldName)
-    //   console.log(fieldName);
-        res.json(transTree)
+      
+      parseXml(fieldName,transTree).then(x=> res.json(x))
+      .catch(e=>res.json({"Error":"got Error from parseXML","Exception":e}));
+
+
+        
     //   res.end(JSON.stringify(transTree));
 
 
@@ -99,8 +102,8 @@ app.post("/getTree/", function(req, res) {
 
 
 
-  function parseXml(fieldName){
-    fs.readFile( './dsedataTest.xml', function(err, data) {
+  function parseXml(fieldName,transTree){
+    return fs.readFile( './dsedataTest.xml').then(data => {
     parser.parseString(data, function (err, result) {
         this.result =   result;
         function getXmlfields(fieldName){
@@ -132,25 +135,13 @@ app.post("/getTree/", function(req, res) {
 
            return resTreeArr;
         }
-
-
-       getXmlfields(fieldName);
-    //  console.log(transTree)
-       
-
-        
-
-
-   
- 
-
+        getXmlfields(fieldName)
     });
-});
+
+
+ return Promise.resolve(transTree) }).catch(e=>Promise.reject(e));
 
 
   }
 
   
-
-
-console.log(transTree)
