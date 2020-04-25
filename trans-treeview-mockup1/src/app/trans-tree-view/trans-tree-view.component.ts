@@ -62,7 +62,7 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    // alert(this.myForm.value);
+     console.log(this.form);
   }
   getHttpReq() {
 
