@@ -1,13 +1,14 @@
 <!--<app-trans-input></app-trans-input>-->
 
-<div class="container pt-5" style = "margin-left:30px;" >
+<!-- <div class="container pt-5" style = "margin-left:30px;" >
 
   <div class="row d-flex justify-content-start">
- 
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
     <ul class="transaction-transaction-tree">
-      <!--<div class="form-group row">-->
 
       <li *ngFor="let p of transTree | keyvalue; let b = index" style="list-style-type: none;" id="transaction-row-li">
+        
         <input type="checkbox" checked="checked" style="display:none" id="{{'b'+b}}" />
         
 
@@ -21,11 +22,9 @@
         <label *ngIf="p.value.length === 0" class="transaction-tree_label--empty" for="{{'b'+b}}">
         {{p.key}}
         </label>
-                <!--<input type="text" class="form-control row-input-transaction" rows="2" aria-label="Text input with segmented dropdown button">-->
 
       
       <button  [hidden]="p.value.length === 0" type= "button" class = "btn btn-danger">...</button>
-      <!--</div>-->
 
         <ul style="list-style-type: none;">
 
@@ -41,5 +40,61 @@
         </ul>
       </li>
       </ul>
+    </form>
+  </div>
+</div>
+
+ -->
+
+
+
+
+<div class="container pt-5" style = "margin-left:30px;" >
+
+  <div class="row d-flex justify-content-start">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <ul class="transaction-transaction-tree">
+      <!--<div class="form-group row">-->
+
+      <!-- <li *ngFor="let p of transTree | keyvalue; let b = index" style="list-style-type: none;" id="transaction-row-li"> -->
+        <li *ngFor="let parent of treeMainDs; let b = index" style="list-style-type: none;" id="transaction-row-li">
+        <input type="checkbox" checked="checked" style="display:none" id="{{'b'+b}}" />
+        
+
+        <label *ngIf="parent.hasChild" class="transaction-tree_label" for="{{'b'+b}}">
+
+              {{parent.name}}
+        </label>
+        
+
+
+        <label *ngIf="!parent.hasChild" class="transaction-tree_label--empty" for="{{'b'+b}}">
+          {{parent.name}}
+        </label>
+                <!--<input type="text" class="form-control row-input-transaction" rows="2" aria-label="Text input with segmented dropdown button">-->
+
+      
+      <button  [hidden]="parent.hasChild" type= "button" class = "btn btn-danger">...</button>
+      <!--</div>-->
+
+        <ul style="list-style-type: none;">
+
+          <!-- <li *ngFor="let i of p['children'] | keyvalue;" class="row-transaction"> -->
+            <li *ngFor = "let child of parent.childObj | keyvalue" class="row-transaction">
+            <label style = "width:24%;font-size: 0.7em;" class="list-group-item list-group-item-action list-group-item-light " class="transaction-tree_label2"
+              for="{{b}}">
+              <a href="#" 
+              class="list-group-item list-group-item-action list-group-item-light" 
+              style = "border-color: #F2F2F2; ">{{child.key}}</a>
+            </label>
+
+            <input type="text" class="form-control row-input-transaction" rows="2" aria-label="Text input with segmented dropdown button">
+
+          </li>
+        </ul>
+      </li>
+      </ul>
+    </form>
   </div>
 </div>
