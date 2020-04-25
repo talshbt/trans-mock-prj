@@ -12,9 +12,8 @@ var parser = new xml2js.Parser();
 //for luAnc1ServerData
 var transTree = {};
 var parent;
-var parents = [];
-var fieldName = 'luAnc1ServerData';
-var obj;
+// var fieldName = 'luAnc1ServerData';
+var treeObj;
 /***************************************/
 
 var luAnc1ServerData = 
@@ -90,56 +89,57 @@ app.post("/getTree/", function(req, res) {
 
       var fieldName = req.body.fieldName;
       
-      parseXml(fieldName,transTree).then(x=> res.json(x))
+      parseXml(fieldName,transTree).
+      then(tree => res.json(tree))
       .catch(e=>res.json({"Error":"got Error from parseXML","Exception":e}));
 
 
         
-    //   res.end(JSON.stringify(transTree));
 
 
   });
 
 
 
-  function parseXml(fieldName,transTree){
+  function parseXml(fieldName, transTree){
     return fs.readFile( './dsedataTest.xml').then(data => {
     parser.parseString(data, function (err, result) {
         this.result =   result;
         function getXmlfields(fieldName){
-            var resTreeArr = [];
+            var treeParents = [];
             for(var j = 0; j < result.dsedataAll.kColl.length; ++j){
              data  = result.dsedataAll.kColl[j]['$'].id;
              if(data == fieldName){
                    for(var i = 0; i < result.dsedataAll.kColl[j]['refData'].length; ++i){
-                       obj =  result.dsedataAll.kColl[j]['refData'][i]['$'];
-                       var values = Object.values(obj)
-                       resTreeArr[i] = (values[0].includes('List') ? (values[0].slice(0,values[0].indexOf('List'))) + 'Data' : values[0]);
+                       treeObj =  result.dsedataAll.kColl[j]['refData'][i]['$'];
+                       var values = Object.values(treeObj)
+                       treeParents[i] = (values[0].includes('List') ? (values[0].slice(0,values[0].indexOf('List'))) + 'Data' : values[0]);
     
-                        if(resTreeArr[i].includes('Data')){
+                        if(treeParents[i].includes('Data')){
         
-                            parent = resTreeArr[i];
+                            parent = treeParents[i];
                             transTree[parent] = [];
 
                         }else{
 
-                            transTree[parent].push(resTreeArr[i]) 
+                            transTree[parent].push(treeParents[i]) 
                          
                         }
-                        getXmlfields(resTreeArr[i]);
+                        getXmlfields(treeParents[i]);
                    } 
 
                    
              }
           }
 
-           return resTreeArr;
+           return treeParents;
         }
         getXmlfields(fieldName)
     });
 
 
- return Promise.resolve(transTree) }).catch(e=>Promise.reject(e));
+    return Promise.resolve(transTree) }).
+    catch(e=>Promise.reject(e));
 
 
   }

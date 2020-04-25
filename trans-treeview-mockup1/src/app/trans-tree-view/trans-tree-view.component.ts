@@ -37,7 +37,10 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
         this.transService.getTreeEvent.subscribe(tree=>{
           this.transTree = tree;
           this.createTreeMainDs();
+          this.fillFormWithTreeDsData();
+
           console.log(this.treeMainDs)
+          console.log(this.form)
           this.setFormArray()
     
         })
@@ -127,8 +130,7 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
 }
 
 createTreeMainDs() {
-  var group = {};
-  var counter = 0;
+
   for (var parent in this.transTree) {
     var formArr = [];
     var parentObj = {};
@@ -163,6 +165,68 @@ hasChild(parent) {
   return this.transTree[parent].length > 0;
 }
 
+createFormTemplate() {
+  var templateFormobj = {};
+  for (var parent of this.treeMainDs) {
+    templateFormobj[parent.name] = new FormArray([]);
+  }
+  this.form = new FormGroup(templateFormobj);
+
+  
+}
+
+fillFormWithTreeDsData() {
+  this.createFormTemplate();
+  for (var parent in this.treeMainDs) {
+    var controlObj = this.createControlObj(parent)
+
+    let formGroup = this.addControlToFormControl(controlObj)
+
+    var formArrayOfControls = this.getFormArray(parent)
+
+    formArrayOfControls.push(new FormGroup(formGroup));
+  }
+
+ 
+
+
+}
+
+
+createControlObj(parent){
+  var controlObj = {};
+      if (!this.treeMainDs[parent]["hasChild"]) {
+        controlObj[this.treeMainDs[parent]["name"]] = this.treeMainDs[parent][
+          "name"
+        ];
+      } else {
+        var children = this.treeMainDs[parent]["children"];
+
+        for (var child in children) {
+          controlObj[children[child]] = children[child];
+        }
+      }
+
+    return controlObj;
+}
+
+addControlToFormControl(controlObj){
+  let formGroup: any = {};
+
+
+      for (let control in controlObj) {
+        formGroup[control] = new FormControl(controlObj[control]);
+      }
+
+
+      return formGroup;
+}
+
+
+getFormArray(parent){
+  var controlName = this.treeMainDs[parent]["name"];
+  return this.form.get(controlName) as FormArray;
+}
 
 
 }
