@@ -24,7 +24,7 @@ export class TransInputComponent {
 
     console.log(form.value.transName)
     this.handleTreeComponent(transDetails);
-    this.transService.getTree(form.value.transName)
+    this.transService.getTreeFromDb(form.value.transName)
     form.reset();
   }
 

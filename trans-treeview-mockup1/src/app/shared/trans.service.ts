@@ -9,7 +9,7 @@ import { DataStorageService } from '../data-storage.service';
 export class TransService {
   detailsChanged = new Subject<TransDetails>();
   getTreeEvent = new Subject<any>();
-
+  treeChanged = new Subject<any>();
   tree = {}
   // public subject = new Subject<any>();
 
@@ -32,12 +32,17 @@ export class TransService {
   }
 
 
-  getTree(fieldName){
+  getTreeFromDb(fieldName){
     this.dataStorage.getTree(fieldName).toPromise().then(data => {
 
       this.tree = data;
 
     }).then((data) => this.getTreeEvent.next(this.tree));
 
+  }
+
+  getTreeFromClient(tree){
+    this.dataStorage.postTree(tree).toPromise()
+    // this.treeChanged.next(tree)
   }
 }

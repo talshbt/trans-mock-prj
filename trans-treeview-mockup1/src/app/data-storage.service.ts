@@ -19,6 +19,13 @@ export class DataStorageService {
     });
   }
 
+
+  postTree(tree){
+    return this.http.post<Object[]>(this.baseApiURL + "/postTree/", {
+      tree,
+    });
+  }
+
   //posttree data
 
 }
