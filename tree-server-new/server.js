@@ -12,6 +12,8 @@ var parser = new xml2js.Parser();
 /***************************************/
 //for luAnc1ServerData
 var transTree = {};
+var storeTransTree = {};
+
 var parent;
 // var fieldName = 'luAnc1ServerData';
 var treeObj;
@@ -42,11 +44,15 @@ app.post("/getTree/", function(req, res) {
       var fieldName = req.body.fieldName;
       
       parseXml(fieldName,transTree).
-      then(tree => res.json(tree))
+      then(tree => {
+        res.json(tree)   
+      })
       .catch(e=>res.json({"Error":"got Error from parseXML","Exception":e}));
 
 
         
+      console.log("storeTransTree")
+      console.log(storeTransTree)
 
 
   });
@@ -57,14 +63,23 @@ app.post("/getTree/", function(req, res) {
     res.setHeader('Content-Type', 'application/json');
 
       var tree = req.body.tree;
-      console.log(tree)
+      
+      console.log(storeTransTree)
      
-
-
-        
-
-
   });
+
+
+  app.post("/storeTree/", function(req, res) {
+
+    res.setHeader('Content-Type', 'application/json');
+
+      var tree = req.body.tree;
+      storeTransTree = tree;
+      // console.log(tree)
+     
+  });
+
+
 
 
 
@@ -102,7 +117,8 @@ app.post("/getTree/", function(req, res) {
            return treeParents;
         }
         getXmlfields(fieldName)
-        console.log(transTree.anqnlc11nigreretData)
+        setTransTree(transTree)
+        // console.log(transTree.anqnlc11nigreretData)
     });
 
 
@@ -163,4 +179,8 @@ function editRow(newRow) {
 function findIndex(rowChanged) {
   const result = rows.filter((row) => row.id === rowChanged["id"]);
   return rows.indexOf(result[0]);
+}
+
+function setTransTree(transTree){
+  storeTransTree = transTree;
 }
