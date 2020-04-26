@@ -56,7 +56,10 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.form);
+    // for (var parent in this.treeMainDs){
+    // console.log(this.form.get(parent['name']).controls);
+    // }
+    console.log(this.form.value)
   }
   getHttpReq() {}
 
@@ -148,14 +151,12 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
   createControlObj(parent) {
     var controlObj = {};
     if (!this.treeMainDs[parent]["hasChild"]) {
-      controlObj[this.treeMainDs[parent]["name"]] = this.treeMainDs[parent][
-        "name"
-      ];
+      controlObj[this.treeMainDs[parent]["name"]] = ""
     } else {
       var children = this.treeMainDs[parent]["children"];
 
       for (var child in children) {
-        controlObj[children[child]] = children[child];
+        controlObj[children[child]] = "";
       }
     }
 
