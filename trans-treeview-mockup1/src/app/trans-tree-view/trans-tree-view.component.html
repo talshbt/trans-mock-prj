@@ -40,7 +40,7 @@
               <div [formGroupName]="i">
                 <li *ngFor = "let child of parent.childObj | keyvalue" class="row-transaction">
                 <label class="list-group-item list-group-item-action list-group-item-light " class="transaction-tree_label2"
-                  for="{{j}}">
+                  [for]="j">
                   <a href="#" 
                   class="list-group-item list-group-item-action list-group-item-light" 
                   style = "border-color: #F2F2F2; ">{{child.key}}</a>
