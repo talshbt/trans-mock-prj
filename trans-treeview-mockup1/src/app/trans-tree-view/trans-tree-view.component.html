@@ -30,7 +30,7 @@
 
 
       
-      <button [hidden]="parent.hasChild" type= "button" class = "btn btn-success btn-sm">...</button>
+      <button [hidden]="parent.hasChild" type= "button" class = "btn btn-success btn-sm" (click)="onOpenTable(parent.name)">...</button>
 
         <ul style="list-style-type: none;">
 

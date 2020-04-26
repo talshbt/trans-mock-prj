@@ -42,6 +42,7 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
 
     this.transService.getTreeEvent.subscribe((tree) => {
       this.transTree = tree;
+      this.transService.storeTree(tree)
       this.createTreeMainDs();
       this.fillFormWithTreeDsData();
 
@@ -177,6 +178,12 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
   getFormArray(parent) {
     var controlName = this.treeMainDs[parent]["name"];
     return this.form.get(controlName) as FormArray;
+  }
+
+
+  onOpenTable(parent){
+    console.log(parent)
+
   }
 }
 
