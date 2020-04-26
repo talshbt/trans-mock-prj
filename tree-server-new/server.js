@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express')
 const fetch = require('node-fetch');
 const xml2js = require('xml2js');
+
 var fs = require('fs').promises
 const PORT = process.env.PORT || 7777;
 const app = express();
@@ -111,4 +112,55 @@ app.post("/getTree/", function(req, res) {
 
   }
 
+  /*************************For Table*******************************/
+  var newRow = [];
+  var rows = [];
+  var cols = ["id", "x", "y", "z"];
+  var id = 0;
+
+  app.post("/addNewRow/", function (req, res) {
+    res.setHeader("Content-Type", "application/json");
   
+    newRow = req.body.newRow;
+    if (newRow["id"] == null) {
+      newRow["id"] = id;
+      id++;
+      rows.push(newRow);
+      res.end(JSON.stringify({ id: newRow["id"], status: true, action: "add" }));
+    } else {
+      editRow(newRow);
+      res.end(JSON.stringify({ id: newRow.id, status: true, action: "edit" }));
+    }
+  
+    console.log(rows);
+  });
+
+  
+app.get("/getRows/", (request, response) => {
+  response.end(JSON.stringify(rows.slice()));
+});
+
+app.get("/getCols/", (request, response) => {
+  response.end(JSON.stringify(cols.slice()));
+});
+
+app.post("/removeRow/", function (req, res) {
+  var rowToRemove = req.body.rowToRemove;
+  var ind = findIndex(rowToRemove);
+  rows.splice(ind, 1);
+  res.end(JSON.stringify({ status: true, action: "delete" }));
+});
+
+function editRow(newRow) {
+  const result = rows.filter((row) => row.id === newRow["id"]);
+  const ind = rows.indexOf(result[0]);
+  rows[ind] = newRow;
+  console.log(rows);
+
+  //todo : whats happend if ID not exists?
+}
+
+function findIndex(rowChanged) {
+  const result = rows.filter((row) => row.id === rowChanged["id"]);
+  return rows.indexOf(result[0]);
+}
