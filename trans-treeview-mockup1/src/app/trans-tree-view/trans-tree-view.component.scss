@@ -112,7 +112,8 @@ label.transaction-tree_label {
 
 label.transaction-tree_label2 {
   cursor: pointer;
-
+  width:24%;
+  font-size: 0.7em;
   &:hover {
     color: #666;
   }
@@ -204,4 +205,10 @@ label.transaction-tree_label[_ngcontent-jxh-c0] {
   font-size: 1.01em;
   border-bottom-right-radius: 0.25rem;
   border-bottom-left-radius: 0.25rem;
+}
+
+.list-group-item{
+	width:24%;
+	font-size: 0.7em;
+
 }

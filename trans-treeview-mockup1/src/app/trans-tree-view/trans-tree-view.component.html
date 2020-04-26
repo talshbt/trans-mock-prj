@@ -1,7 +1,7 @@
 
 
 
- <form [formGroup]="form" (ngSubmit)="onSubmit()">
+ <form *ngIf = "form!==null" [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="container pt-5" style = "margin-left:30px;" >
 
   <div class="row d-flex justify-content-start">
@@ -12,17 +12,22 @@
         <li *ngFor="let parent of treeMainDs; let j = index" style="list-style-type: none;" id="transaction-row-li">
         <input type="checkbox" checked="checked" style="display:none" id="{{'j'+j}}" />
         
-
-        <label  *ngIf="parent.hasChild" class="transaction-tree_label" for="{{'j'+j}}">
-
+        <div  *ngIf="parent.hasChild else noChild">
+        <label class="transaction-tree_label" for="{{'j'+j}}">
+       
               {{parent.name}}
         </label>
+
+      </div>
         
 
-
-        <label *ngIf="!parent.hasChild" class="transaction-tree_label--empty" for="{{'j'+j}}">
+      <ng-template #noChild>
+        <label class="transaction-tree_label--empty" for="{{'j'+j}}">
           {{parent.name}}
         </label>
+
+      </ng-template>
+
 
       
       <button [hidden]="parent.hasChild" type= "button" class = "btn btn-success btn-sm">...</button>
@@ -34,7 +39,7 @@
               *ngFor="let item of form.get(parent.name).controls; let i = index;">
               <div [formGroupName]="i">
                 <li *ngFor = "let child of parent.childObj | keyvalue" class="row-transaction">
-                <label style = "width:24%;font-size: 0.7em;" class="list-group-item list-group-item-action list-group-item-light " class="transaction-tree_label2"
+                <label class="list-group-item list-group-item-action list-group-item-light " class="transaction-tree_label2"
                   for="{{j}}">
                   <a href="#" 
                   class="list-group-item list-group-item-action list-group-item-light" 
