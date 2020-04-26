@@ -1,6 +1,6 @@
 import { ViewContainerRef, Component, Injector, ComponentFactoryResolver, ComponentRef, ReflectiveInjector, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms";
-import { TransService } from "../shared/trans.service";
+import { TreeTransDataStorageService } from "../shared/tree-trans-data-storage.service";
 import { TransDetails } from "../shared/trans-details.model";
 import { TransTreeViewComponent } from '../trans-tree-view/trans-tree-view.component';
 import { Subject } from "rxjs";
@@ -14,7 +14,7 @@ import { Subject } from "rxjs";
 export class TransInputComponent {
   isSubmitted = false;
 
-  constructor(private transService: TransService, private cfr: ComponentFactoryResolver,
+  constructor(private transService: TreeTransDataStorageService, private cfr: ComponentFactoryResolver,
     private vc: ViewContainerRef) {
   }
 

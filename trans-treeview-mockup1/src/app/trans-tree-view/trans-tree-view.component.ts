@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { RestApiService } from "../rest-api.service";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { TransService } from "../shared/trans.service";
+import { TreeTransDataStorageService } from "../shared/tree-trans-data-storage.service";
 import { TransDetails } from "../shared/trans-details.model";
 import {
   NgForm,
@@ -29,7 +29,7 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
   treeMainDs = [];
   constructor(
     public restApi: RestApiService,
-    private transService: TransService
+    private transService: TreeTransDataStorageService
   ) {}
   ngOnInit() {
     this.subscription = this.transService.detailsChanged.subscribe((data) => {
