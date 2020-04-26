@@ -36,7 +36,7 @@ import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
     ReactiveFormsModule,
     FormsModule
   ],
-  entryComponents: [TransTreeViewComponent,NgModalComponent, AddItemComponent, TableComponent],
+  entryComponents: [TransTreeViewComponent, NgModalComponent, AddItemComponent, TableComponent],
   providers: [],
   bootstrap: [AppComponent],
   
