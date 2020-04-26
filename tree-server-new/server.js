@@ -100,6 +100,21 @@ app.post("/getTree/", function(req, res) {
   });
 
 
+  app.post("/postTree/", function(req, res) {
+
+    res.setHeader('Content-Type', 'application/json');
+
+      var tree = req.body.tree;
+      console.log(tree)
+     
+
+
+        
+
+
+  });
+
+
 
   function parseXml(fieldName, transTree){
     return fs.readFile( './dsedataTest.xml').then(data => {
