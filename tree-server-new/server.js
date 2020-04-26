@@ -16,56 +16,7 @@ var parent;
 var treeObj;
 /***************************************/
 
-var luAnc1ServerData = 
-{
-  blockSend001Data: [],
-  anqnlc1wnigreretData: [
-    'sugNigreretInt',        'sugPirteyMahaduraInt',
-    'shemReshumaStr',        'rsmTimestampDbl',
-    'sugMivneInt',           'misparBankCheshbonInt',
-    'misparSnifCheshbonInt', 'misparCheshbonInt',
-    'misparZihuyLakoachStr', 'kodMataraInt',
-    'fillerStr',             'simanSofNigreretStr',
-    'sugNigreretInt',        'sugPirteyMahaduraInt',
-    'shemReshumaStr',        'rsmTimestampDbl',
-    'sugMivneInt',           'misparBankCheshbonInt',
-    'misparSnifCheshbonInt', 'misparCheshbonInt',
-    'misparZihuyLakoachStr', 'kodMataraInt',
-    'fillerStr',             'simanSofNigreretStr'
-  ],
-  blockReceive001Data: [],
-  anqnlc11nigreretData: [
-    'sugNigreretInt',
-    'sugPirteyMahaduraInt',
-    'shemReshumaStr',
-    'rsmTimestampDbl',
-    'sugMivneInt',
-    'kamutBealimInt',
-    'fillerStr',
-    'simanSofNigreretStr'
-  ],
-  anqtlc1wnigreretData: [
-    'sugNigreretInt',
-    'sugPirteyMahaduraInt',
-    'shemReshumaStr',
-    'rsmTimestampDbl',
-    'sugMivneInt',
-    'misparTavlaInt',
-    'misparShuraInt',
-    'misparZihuyLakoachStr',
-    'shemLakoach1Str',
-    'shemPratiStr',
-    'fillerStr',
-    'simanSofNigreretStr'
-  ],
-  trqra001nigreretData: [],
-  trqra002nigreretData: [],
-  trqra004nigreretData: [],
-  trqra005nigreretData: [],
-  trqhd000nigreretData: [],
-  trqhd002nigreretData: [],
-  anc1OrderData: []
-}
+
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
@@ -150,6 +101,7 @@ app.post("/getTree/", function(req, res) {
            return treeParents;
         }
         getXmlfields(fieldName)
+        console.log(transTree.anqnlc11nigreretData)
     });
 
 
