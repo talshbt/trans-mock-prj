@@ -33,6 +33,17 @@ export class DataStorageService {
     });
   }
 
+  refreshTree(){
+    return this.http.get<any>(this.baseApiURL + "/refreshTree/", {
+     
+    }).toPromise().then((response) => {
+      // this.rows = response;
+    console.log(response)
+    })
+    .catch((e) => console.error(e));;
+
+  }
+
   //posttree data
 
 }

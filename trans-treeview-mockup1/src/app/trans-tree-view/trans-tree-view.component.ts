@@ -45,10 +45,12 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
       this.transService.storeTree(tree)
       this.createTreeMainDs();
       this.fillFormWithTreeDsData();
-
       console.log(this.treeMainDs);
       console.log(this.form);
       this.setFormArray();
+     
+
+      
     });
 
     this.transService.getTreeEvent.subscribe((tree) => {
@@ -62,6 +64,8 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
     // }
     console.log(this.form.value)
     this.transService.getTreeFromClient(this.form.value)
+    this.transService.refreshTree();
+
   }
   getHttpReq() {}
 
