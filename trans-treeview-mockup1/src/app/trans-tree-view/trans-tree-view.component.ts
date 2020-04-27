@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
-import { RestApiService } from "../rest-api.service";
+// import { RestApiService } from "../rest-api.service";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { TreeTransMockupService } from "../shared/tree-trans-mockup.service";
@@ -28,7 +28,7 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
   tatSherutName = null;
   treeMainDs = [];
   constructor(
-    public restApi: RestApiService,
+   
     private transService: TreeTransMockupService
   ) {}
   ngOnInit() {
