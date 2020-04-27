@@ -1,6 +1,6 @@
 import { ViewContainerRef, Component, Injector, ComponentFactoryResolver, ComponentRef, ReflectiveInjector, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms";
-import { TreeTransDataStorageService } from "../shared/tree-trans-data-storage.service";
+import { TreeTransMockupService } from "../shared/tree-trans-mockup.service";
 import { TransDetails } from "../shared/trans-details.model";
 import { TransTreeViewComponent } from '../trans-tree-view/trans-tree-view.component';
 import { Subject } from "rxjs";
@@ -14,7 +14,7 @@ import { Subject } from "rxjs";
 export class TransInputComponent {
   isSubmitted = false;
 
-  constructor(private transService: TreeTransDataStorageService, private cfr: ComponentFactoryResolver,
+  constructor(private treeTransMockupService: TreeTransMockupService, private cfr: ComponentFactoryResolver,
     private vc: ViewContainerRef) {
   }
 
@@ -24,14 +24,14 @@ export class TransInputComponent {
 
     console.log(form.value.transName)
     this.handleTreeComponent(transDetails);
-    this.transService.getTreeFromDb(form.value.transName)
+    this.treeTransMockupService.getTreeFromDb(form.value.transName)
     form.reset();
   }
 
   handleTreeComponent(transDetails) {
 
     this.isSubmitted = true;
-    this.transService.sendDetailsToTreeView(transDetails);
+    this.treeTransMockupService.sendDetailsToTreeView(transDetails);
 
   }
 
