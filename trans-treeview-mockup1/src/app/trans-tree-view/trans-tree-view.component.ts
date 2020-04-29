@@ -68,7 +68,9 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
     // for (var parent in this.treeMainDs){
     // console.log(this.form.get(parent['name']).controls);
     // }
-    console.log(this.form.value)
+    // console.log(this.form.value)
+    console.log(this.form2.value)
+
     this.transService.getTreeFromClient(this.form.value)
     this.transService.refreshTree();
 
