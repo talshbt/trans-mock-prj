@@ -69,10 +69,10 @@ app.post("/getTree/", function(req, res) {
       parseXml(fieldName,transTree).
       then(tree => {
         createTransDict(transTree)
-        console.log("transDict")
+        // console.log("transDict")
 
-        console.log(transDict)
-        res.json(tree)   
+        // console.log(transDict)
+        res.json(transDict)   
       })
       .catch(e=>res.json({"Error":"got Error from parseXML","Exception":e}));
     
