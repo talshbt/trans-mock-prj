@@ -20,6 +20,8 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   public transForm;
   private form = null;
+  private form2 = null;
+
   count = 0;
   transTree = {};
   transName = null;
@@ -53,9 +55,10 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
       
     });
 
-    this.transService.getTreeEvent2.subscribe((tree) => {
+    this.transService.getTreeEvent2.subscribe((formData) => {
       console.log("--------------tree-----------------")
-      console.log(tree)
+      console.log(formData)
+      this.form2 = formData;
      
 
       
