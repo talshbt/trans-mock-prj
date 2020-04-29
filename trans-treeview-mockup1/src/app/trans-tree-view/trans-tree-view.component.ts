@@ -5,8 +5,6 @@ import { Subscription } from "rxjs";
 import { TreeTransMockupService } from "../shared/tree-trans-mockup.service";
 import { TransDetails } from "../shared/trans-details.model";
 import {
-  NgForm,
-  FormBuilder,
   FormGroup,
   FormArray,
   Validators,
@@ -40,14 +38,24 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
     });
 
 
-    this.transService.getTreeEvent.subscribe((tree) => {
-      this.transTree = tree;
-      this.transService.storeTree(tree)
-      this.createTreeMainDs();
-      this.fillFormWithTreeDsData();
-      console.log(this.treeMainDs);
-      console.log(this.form);
-      this.setFormArray();
+    this.transService.getTreeEvent.subscribe((formDataObj) => {
+      // this.transTree = tree;
+      // this.transService.storeTree(tree)
+      this.form = formDataObj['form']
+      this.treeMainDs = formDataObj['treeMainDs']
+      // this.createTreeMainDs();
+      // this.fillFormWithTreeDsData();
+      // console.log(this.treeMainDs);
+      // console.log(this.form);
+      // this.setFormArray();
+     
+
+      
+    });
+
+    this.transService.getTreeEvent2.subscribe((tree) => {
+      console.log("--------------tree-----------------")
+      console.log(tree)
      
 
       
@@ -67,7 +75,6 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
     this.transService.refreshTree();
 
   }
-  getHttpReq() {}
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -102,87 +109,87 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  createTreeMainDs() {
-    for (var parent in this.transTree) {
-      var formArr = [];
-      var parentObj = {};
-      parentObj["name"] = parent;
-      if (!this.hasChild(parent)) {
-        formArr.push(new FormControl(parent));
-        parentObj["hasChild"] = false;
-      } else {
-        var children = [];
-        var childObj = {};
-        parentObj["hasChild"] = true;
-        for (var child in this.transTree[parent]) {
-          formArr.push(new FormControl(this.transTree[parent][child]));
-          childObj[this.transTree[parent][child]] = this.transTree[parent][
-            child
-          ];
-          children.push(this.transTree[parent][child]);
-        }
-        parentObj["children"] = children;
-        parentObj["childObj"] = childObj;
-      }
+  // createTreeMainDs() {
+  //   for (var parent in this.transTree) {
+  //     var formArr = [];
+  //     var parentObj = {};
+  //     parentObj["name"] = parent;
+  //     if (!this.hasChild(parent)) {
+  //       formArr.push(new FormControl(parent));
+  //       parentObj["hasChild"] = false;
+  //     } else {
+  //       var children = [];
+  //       var childObj = {};
+  //       parentObj["hasChild"] = true;
+  //       for (var child in this.transTree[parent]) {
+  //         formArr.push(new FormControl(this.transTree[parent][child]));
+  //         childObj[this.transTree[parent][child]] = this.transTree[parent][
+  //           child
+  //         ];
+  //         children.push(this.transTree[parent][child]);
+  //       }
+  //       parentObj["children"] = children;
+  //       parentObj["childObj"] = childObj;
+  //     }
 
-      this.treeMainDs.push(parentObj);
-    }
-  }
+  //     this.treeMainDs.push(parentObj);
+  //   }
+  // }
 
-  hasChild(parent) {
-    return this.transTree[parent].length > 0;
-  }
+  // hasChild(parent) {
+  //   return this.transTree[parent].length > 0;
+  // }
 
-  createFormTemplate() {
-    var templateFormobj = {};
-    for (var parent of this.treeMainDs) {
-      templateFormobj[parent.name] = new FormArray([]);
-    }
-    this.form = new FormGroup(templateFormobj);
-  }
+  // createFormTemplate() {
+  //   var templateFormobj = {};
+  //   for (var parent of this.treeMainDs) {
+  //     templateFormobj[parent.name] = new FormArray([]);
+  //   }
+  //   this.form = new FormGroup(templateFormobj);
+  // }
 
-  fillFormWithTreeDsData() {
-    this.createFormTemplate();
-    for (var parent in this.treeMainDs) {
-      var controlObj = this.createControlObj(parent);
+  // fillFormWithTreeDsData() {
+  //   this.createFormTemplate();
+  //   for (var parent in this.treeMainDs) {
+  //     var controlObj = this.createControlObj(parent);
 
-      let formGroup = this.addControlToFormControl(controlObj);
+  //     let formGroup = this.addControlToFormControl(controlObj);
 
-      var formArrayOfControls = this.getFormArray(parent);
+  //     var formArrayOfControls = this.getFormArray(parent);
 
-      formArrayOfControls.push(new FormGroup(formGroup));
-    }
-  }
+  //     formArrayOfControls.push(new FormGroup(formGroup));
+  //   }
+  // }
 
-  createControlObj(parent) {
-    var controlObj = {};
-    if (!this.treeMainDs[parent]["hasChild"]) {
-      controlObj[this.treeMainDs[parent]["name"]] = ""
-    } else {
-      var children = this.treeMainDs[parent]["children"];
+  // createControlObj(parent) {
+  //   var controlObj = {};
+  //   if (!this.treeMainDs[parent]["hasChild"]) {
+  //     controlObj[this.treeMainDs[parent]["name"]] = ""
+  //   } else {
+  //     var children = this.treeMainDs[parent]["children"];
 
-      for (var child in children) {
-        controlObj[children[child]] = "";
-      }
-    }
+  //     for (var child in children) {
+  //       controlObj[children[child]] = "";
+  //     }
+  //   }
 
-    return controlObj;
-  }
+  //   return controlObj;
+  // }
 
-  addControlToFormControl(controlObj) {
-    let formGroup: any = {};
+  // addControlToFormControl(controlObj) {
+  //   let formGroup: any = {};
 
-    for (let control in controlObj) {
-      formGroup[control] = new FormControl(controlObj[control]);
-    }
+  //   for (let control in controlObj) {
+  //     formGroup[control] = new FormControl(controlObj[control]);
+  //   }
 
-    return formGroup;
-  }
+  //   return formGroup;
+  // }
 
-  getFormArray(parent) {
-    var controlName = this.treeMainDs[parent]["name"];
-    return this.form.get(controlName) as FormArray;
-  }
+  // getFormArray(parent) {
+  //   var controlName = this.treeMainDs[parent]["name"];
+  //   return this.form.get(controlName) as FormArray;
+  // }
 
 
   onOpenTable(parent){
