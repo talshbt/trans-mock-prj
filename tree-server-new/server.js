@@ -14,6 +14,7 @@ var parser = new xml2js.Parser();
 var transTree = {};
 var storeTemplateTree = {};
 var currentTree = null;
+var transDict = {};
 
 var parent;
 // var fieldName = 'luAnc1ServerData';
@@ -46,6 +47,31 @@ app.post("/getTree/", function(req, res) {
       
       parseXml(fieldName,transTree).
       then(tree => {
+        createTransDict(transTree)
+        console.log("transDict")
+
+        console.log(transDict)
+        res.json(tree)   
+      })
+      .catch(e=>res.json({"Error":"got Error from parseXML","Exception":e}));
+    
+        
+      
+
+  });
+
+  app.post("/getTree2/", function(req, res) {
+
+    res.setHeader('Content-Type', 'application/json');
+
+      var fieldName = req.body.fieldName;
+      
+      parseXml(fieldName,transTree).
+      then(tree => {
+        createTransDict(transTree)
+        console.log("transDict")
+
+        console.log(transDict)
         res.json(tree)   
       })
       .catch(e=>res.json({"Error":"got Error from parseXML","Exception":e}));
@@ -62,7 +88,7 @@ app.post("/getTree/", function(req, res) {
 
       var tree = req.body.tree;
       currentTree = tree;
-      console.log(currentTree)
+      // console.log(currentTree)
      
   });
 
@@ -132,7 +158,27 @@ app.post("/getTree/", function(req, res) {
     response.json(currentTree)
   });
   
+  function createTransDict(transTree) {
+    for (var parent in transTree) {
+      var parentObj = {};
+      var key = parent;
+      var values = [];
+      // console.log(hasChildren(parent, transTree))
+
+      for (var child in transTree[parent]) {
+        var childObj = {};
+        childObj[transTree[parent][child]] = "";
+        values.push(childObj);
+      }
   
+      transDict[key] = values;
+      
+    }
+  }
+
+  function hasChildren(parent, transTree) {
+    return transTree[parent].length > 0;
+  }
 
   /*************************For Table*******************************/
   var newRow = [];
