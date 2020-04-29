@@ -21,7 +21,7 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
   public transForm;
   private form = null;
   private form2 = null;
-
+  private transDict2 = {};
   count = 0;
   transTree = {};
   transName = null;
@@ -41,24 +41,19 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
 
 
     this.transService.getTreeEvent.subscribe((formDataObj) => {
-      // this.transTree = tree;
-      // this.transService.storeTree(tree)
+
       this.form = formDataObj['form']
       this.treeMainDs = formDataObj['treeMainDs']
-      // this.createTreeMainDs();
-      // this.fillFormWithTreeDsData();
-      // console.log(this.treeMainDs);
-      // console.log(this.form);
-      // this.setFormArray();
-     
+
 
       
     });
 
-    this.transService.getTreeEvent2.subscribe((formData) => {
+    this.transService.getTreeEvent2.subscribe((formDataObj) => {
       console.log("--------------tree-----------------")
-      console.log(formData)
-      this.form2 = formData;
+      console.log(formDataObj)
+      this.form2 = formDataObj['form']
+      this.transDict2 = formDataObj['transDict2']
      
 
       
