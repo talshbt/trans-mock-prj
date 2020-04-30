@@ -8,11 +8,11 @@ import { TreeTransMockupService } from "../shared/tree-trans-mockup.service";
   styleUrls: ["./trans-tree-view.component.scss"],
 })
 export class TransTreeViewComponent implements OnInit, OnDestroy {
-  subscription: Subscription;
+  private subscription: Subscription;
   private form = null;
   private transTree = {};
-  transName = null;
-  tatSherutName = null;
+  private transName = null;
+  private tatSherutName = null;
   constructor(
    
     private transService: TreeTransMockupService
@@ -25,7 +25,7 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
       
     });
 
-    this.transService.getTreeEvent2.subscribe((formDataObj) => {
+    this.transService.getTreeEvent.subscribe((formDataObj) => {
       this.form = formDataObj['form']
       this.transTree = formDataObj['transDict2']
      

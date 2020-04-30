@@ -37,9 +37,7 @@
             <div [formArrayName]="parent.key"
               *ngFor="let item of form.get(parent.key).controls; let i = index;">
               <div [formGroupName]="i">
-                <!-- <li *ngFor = "let child of parent.childObj | keyvalue" class="row-transaction"> -->
                   <div  *ngFor="let child of parent.value | keyvalue;">
-                    <!-- <div *> -->
                       <li class="row-transaction" *ngFor="let ch of child.value | keyvalue;" >
 
                           <label class="list-group-item list-group-item-action list-group-item-light " class="transaction-tree_label2"
@@ -50,7 +48,6 @@
                           </label>
 
                         <input [formControlName]="ch.key" type="text" class="form-control row-input-transaction" rows="2" aria-label="Text input with segmented dropdown button">
-                      <!-- </div> -->
                         </li>
                       </div>
                 <div *ngIf = "parent.value.length === 0">
