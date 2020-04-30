@@ -1,7 +1,6 @@
-<!-- 
 
 
- <form *ngIf = "form!==null" [formGroup]="form" (ngSubmit)="onSubmit()">
+<form *ngIf = "form !== null" [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="container pt-5" style = "margin-left:30px;" >
 
   <div class="row d-flex justify-content-start">
@@ -9,112 +8,7 @@
 
     <ul class="transaction-transaction-tree">
     
-        <li *ngFor="let parent of treeMainDs; let j = index" style="list-style-type: none;" id="transaction-row-li">
-        <input type="checkbox" checked="checked" style="display:none" id="{{'j'+j}}" />
-        
-        <div  *ngIf="parent.hasChild else noChild">
-        <label class="transaction-tree_label" for="{{'j'+j}}">
-       
-              {{parent.key}}
-        </label>
-
-      </div>
-        
-
-      <ng-template #noChild>
-        <label class="transaction-tree_label--empty" for="{{'j'+j}}">
-          {{parent.key}}
-        </label>
-
-      </ng-template>
-
-
-      
-      <button [hidden]="parent.hasChild" type= "button" class = "btn btn-success btn-sm" (click)="onOpenTable(parent.key)">...</button>
-
-        <ul style="list-style-type: none;">
-
-
-            <div [formArrayName]="parent.key"
-              *ngFor="let item of form.get(parent.key).controls; let i = index;">
-              <div [formGroupName]="i">
-                <li *ngFor = "let child of parent.childObj | keyvalue" class="row-transaction">
-                <label class="list-group-item list-group-item-action list-group-item-light " class="transaction-tree_label2"
-                  [for]="j">
-                  <a href="#" 
-                  class="list-group-item list-group-item-action list-group-item-light" 
-                  style = "border-color: #F2F2F2; ">{{child.key}}</a>
-                </label>
-
-                <input [formControlName]="child.key" type="text" class="form-control row-input-transaction" rows="2" aria-label="Text input with segmented dropdown button">
-
-                </li>
-                <div *ngIf = "!parent.hasChild">
-                  <input  [formControlName]="parent.key" type="text" class="form-control row-input-transaction" rows="2" aria-label="Text input with segmented dropdown button"> 
-                </div>
-              </div>
-              
-            </div>
-        </ul>
-      </li>
-      
-
-      </ul>
-
-  </div>
-</div>
-
-<button>Submit</button>
-</form>
-
-
-
- -->
-
-
-
- 
-<!-- <form [formGroup]="form2" (ngSubmit)="onSubmit()">
-  <div *ngFor="let parent of transDict2 |keyvalue ; let j = index">
-     
-  <div [formArrayName]="parent.key"
-    *ngFor="let item of form2.get(parent.key).controls; let i = index;">
-    <div [formGroupName]="i">
-               <div *ngFor="let child of parent.value | keyvalue;" >
-                 <div *ngFor="let ch of child.value | keyvalue;" >
-  
-                            <input [formControlName]="ch.key" [placeholder]="ch.key">
-  
-                      </div>
-               </div>
-    
-  
-       <div *ngIf = "parent.value.length === 0">
-      <input  [formControlName]="parent.key">
-      </div>
-     
-    </div>
-  
-  
-  </div>
-    </div>
-  
-          <button>Submit</button>
-  
-  </form> -->
-  
-  
-
-
-<form *ngIf = "form2!==null" [formGroup]="form2" (ngSubmit)="onSubmit()">
-  <div class="container pt-5" style = "margin-left:30px;" >
-
-  <div class="row d-flex justify-content-start">
-   
-
-    <ul class="transaction-transaction-tree">
-    
-      <li *ngFor="let parent of transDict2 |keyvalue ; let j = index" style="list-style-type: none;" id="transaction-row-li">
+      <li *ngFor="let parent of transTree |keyvalue ; let j = index" style="list-style-type: none;" id="transaction-row-li">
         <input type="checkbox" checked="checked" style="display:none" id="{{'j'+j}}" />
         
         <div  *ngIf="parent.value.length > 0 else noChild">
@@ -141,7 +35,7 @@
 
 
             <div [formArrayName]="parent.key"
-              *ngFor="let item of form2.get(parent.key).controls; let i = index;">
+              *ngFor="let item of form.get(parent.key).controls; let i = index;">
               <div [formGroupName]="i">
                 <!-- <li *ngFor = "let child of parent.childObj | keyvalue" class="row-transaction"> -->
                   <div  *ngFor="let child of parent.value | keyvalue;">
