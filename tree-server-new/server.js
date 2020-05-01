@@ -40,28 +40,6 @@ app.use(function (req, res, next) {
 });
 
 
-// app.post("/getTree/", function(req, res) {
-
-//     res.setHeader('Content-Type', 'application/json');
-
-//       var fieldName = req.body.fieldName;
-      
-//       parseXml(fieldName,transTree).
-//       then(tree => {
-//         if(isInitTree){
-//           createTransDict(transTree)
-//         }
-//         console.log("transDict")
-
-//         console.log(transDict)
-//         res.json(tree)   
-//       })
-//       .catch(e=>res.json({"Error":"got Error from parseXML","Exception":e}));
-    
-        
-      
-
-//   });
 
   app.post("/getTree/", function(req, res) {
 
@@ -71,11 +49,15 @@ app.use(function (req, res, next) {
       
       parseXml(fieldName,transTree).
       then(tree => {
-        createTransDict(transTree)
-        // console.log("transDict")
+          createTransDict(transTree)
+          res.json(transDict)
+      
+        
 
-        // console.log(transDict)
-        res.json(transDict)   
+        //  console.log("transDict")
+
+        //  console.log(currentTree)
+        // res.json(transDict)   
       })
       .catch(e=>res.json({"Error":"got Error from parseXML","Exception":e}));
     
@@ -85,13 +67,42 @@ app.use(function (req, res, next) {
   });
 
 
+  app.post("/getCurrentTree/", function(req, res) {
+
+    res.setHeader('Content-Type', 'application/json');
+
+      var fieldName = req.body.fieldName;
+      
+      parseXml(fieldName,transTree).
+      then(tree => {
+       
+          res.json(currentTree)
+        
+        
+
+        //  console.log("transDict")
+
+        //  console.log(currentTree)
+        // res.json(transDict)   
+      })
+      .catch(e=>res.json({"Error":"got Error from parseXML","Exception":e}));
+    
+        
+      
+
+  });
+
+
+
+
   app.post("/postTree/", function(req, res) {
 
     res.setHeader('Content-Type', 'application/json');
 
       var tree = req.body.tree;
       currentTree = tree;
-      console.log(currentTree)
+      // transDict = tree;
+       console.log(currentTree)
      
   });
 
@@ -162,7 +173,7 @@ app.use(function (req, res, next) {
   // });
   
   function createTransDict(transTree) {
-    this.isInitTree = false
+    isInitTree = false
     for (var parent in transTree) {
       var key = parent;
       var values = [];
