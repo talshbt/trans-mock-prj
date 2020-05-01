@@ -24,7 +24,9 @@ export class TransInputComponent {
 
     console.log(form.value.transName)
     this.handleTreeComponent(transDetails);
+    // this.treeTransMockupService.getTreeFromDb(form.value.transName)
     this.treeTransMockupService.getTreeFromDb(form.value.transName)
+    this.treeTransMockupService.getCurrentTreeFromDb(form.value.transName)
 
     form.reset();
   }
