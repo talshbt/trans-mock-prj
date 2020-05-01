@@ -1,72 +1,102 @@
+<form *ngIf="form !== null" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="container pt-5" style="margin-left: 30px;">
+    <div class="row d-flex justify-content-start">
+      <ul class="transaction-transaction-tree">
+        <li
+          *ngFor="let parent of transTree | keyvalue; let j = index"
+          style="list-style-type: none;"
+          id="transaction-row-li"
+        >
+          <input
+            type="checkbox"
+            checked="checked"
+            style="display: none;"
+            id="{{ 'j' + j }}"
+          />
 
+          <div *ngIf="parent.value.length > 1; else noChild">
+            <label class="transaction-tree_label" for="{{ 'j' + j }}">
+              {{ parent.key }}
+            </label>
+            <button
+            type="button"
+            class="btn btn-success btn-sm"
+            (click)="onOpenTable(parent.key)"
+          >
+            ...
+          </button>
+          </div>
 
-<form *ngIf = "form !== null" [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div class="container pt-5" style = "margin-left:30px;" >
+          <ng-template #noChild>
+            <label class="transaction-tree_label--empty" for="{{ 'j' + j }}">
+              {{ parent.key }}
+            </label>
+          </ng-template>
 
-  <div class="row d-flex justify-content-start">
-   
+          <!-- <button
+            [hidden]="parent.value.length > 1"
+            type="button"
+            class="btn btn-success btn-sm"
+            (click)="onOpenTable(parent.key)"
+          >
+            ...
+          </button> -->
 
-    <ul class="transaction-transaction-tree">
-    
-      <li *ngFor="let parent of transTree |keyvalue ; let j = index" style="list-style-type: none;" id="transaction-row-li">
-        <input type="checkbox" checked="checked" style="display:none" id="{{'j'+j}}" />
-        
-        <div  *ngIf="parent.value.length > 1  else noChild">
-        <label class="transaction-tree_label" for="{{'j'+j}}">
-       
-              {{parent.key}}
-        </label>
-
-      </div>
-        
-
-      <ng-template #noChild>
-        <label class="transaction-tree_label--empty" for="{{'j'+j}}">
-          {{parent.key}}
-        </label>
-
-      </ng-template>
-
-
-      
-      <button [hidden]="parent.value.length > 1" type= "button" class = "btn btn-success btn-sm" (click)="onOpenTable(parent.key)">...</button>
-
-        <ul style="list-style-type: none;">
-
-
-            <div [formArrayName]="parent.key"
-              *ngFor="let item of form.get(parent.key).controls; let i = index;">
+          <ul style="list-style-type: none;">
+            <div
+              [formArrayName]="parent.key"
+              *ngFor="let item of form.get(parent.key).controls; let i = index"
+            >
               <div [formGroupName]="i">
-                <div *ngIf = "parent.value.length > 1">
-                  <div  *ngFor="let child of parent.value | keyvalue;">
-                      <li class="row-transaction" *ngFor="let ch of child.value | keyvalue;" >
+                <div *ngIf="parent.value.length > 1; else noChild">
+                  
+                  <div *ngFor="let child of parent.value | keyvalue">
+                    <li
+                      class="row-transaction"
+                      *ngFor="let ch of child.value | keyvalue"
+                    >
+                      <label
+                        class="list-group-item list-group-item-action list-group-item-light"
+                        class="transaction-tree_label2"
+                        [for]="j"
+                      >
+                        <a
+                          href="#"
+                          class="list-group-item list-group-item-action list-group-item-light"
+                          style="border-color: #f2f2f2;"
+                          >{{ ch.key }}</a
+                        >
+                      </label>
 
-                          <label class="list-group-item list-group-item-action list-group-item-light " class="transaction-tree_label2"
-                            [for]="j">
-                            <a href="#" 
-                            class="list-group-item list-group-item-action list-group-item-light" 
-                            style = "border-color: #F2F2F2; ">{{ch.key}}</a>
-                          </label>
-                          <!-- {{ch.key === parent.key}} -->
+                      <input
+                        [formControlName]="ch.key"
+                        type="text"
+                        class="form-control row-input-transaction"
+                        rows="2"
+                        aria-label="Text input with segmented dropdown button"
+                      />
+                    </li>
+                  </div>
+                </div>
 
-                        <input [formControlName]="ch.key" type="text" class="form-control row-input-transaction" rows="2" aria-label="Text input with segmented dropdown button">
-                        </li>
-                      </div>
-                </div>
-                <div *ngIf = "parent.value.length === 1">
-                  <input  [formControlName]="parent.key" type="text" class="form-control row-input-transaction" rows="2" aria-label="Text input with segmented dropdown button"> 
-                </div>
-              </div>
-              
-            </div>
-        </ul>
-      </li>
+                <ng-template #noChild>
+                    <input
+                      [formControlName]="parent.key"
+                      type="text"
+                      class="form-control row-input-transaction"
+                      rows="2"
+                      aria-label="Text input with segmented dropdown button"
+                    />
+                </ng-template>
       
-
+                
+              </div>
+            </div>
+          </ul>
+        </li>
       </ul>
-
+    </div>
   </div>
-</div>
 
-<button>Submit</button>
+  <button>Submit</button>
 </form>
