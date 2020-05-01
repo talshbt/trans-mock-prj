@@ -11,7 +11,7 @@
       <li *ngFor="let parent of transTree |keyvalue ; let j = index" style="list-style-type: none;" id="transaction-row-li">
         <input type="checkbox" checked="checked" style="display:none" id="{{'j'+j}}" />
         
-        <div  *ngIf="parent.value.length > 0 else noChild">
+        <div  *ngIf="parent.value.length > 1  else noChild">
         <label class="transaction-tree_label" for="{{'j'+j}}">
        
               {{parent.key}}
@@ -29,7 +29,7 @@
 
 
       
-      <button [hidden]="parent.value.length>0" type= "button" class = "btn btn-success btn-sm" (click)="onOpenTable(parent.key)">...</button>
+      <button [hidden]="parent.value.length > 1" type= "button" class = "btn btn-success btn-sm" (click)="onOpenTable(parent.key)">...</button>
 
         <ul style="list-style-type: none;">
 
@@ -37,6 +37,7 @@
             <div [formArrayName]="parent.key"
               *ngFor="let item of form.get(parent.key).controls; let i = index;">
               <div [formGroupName]="i">
+                <div *ngIf = "parent.value.length > 1">
                   <div  *ngFor="let child of parent.value | keyvalue;">
                       <li class="row-transaction" *ngFor="let ch of child.value | keyvalue;" >
 
@@ -46,11 +47,13 @@
                             class="list-group-item list-group-item-action list-group-item-light" 
                             style = "border-color: #F2F2F2; ">{{ch.key}}</a>
                           </label>
+                          <!-- {{ch.key === parent.key}} -->
 
                         <input [formControlName]="ch.key" type="text" class="form-control row-input-transaction" rows="2" aria-label="Text input with segmented dropdown button">
                         </li>
                       </div>
-                <div *ngIf = "parent.value.length === 0">
+                </div>
+                <div *ngIf = "parent.value.length === 1">
                   <input  [formControlName]="parent.key" type="text" class="form-control row-input-transaction" rows="2" aria-label="Text input with segmented dropdown button"> 
                 </div>
               </div>
