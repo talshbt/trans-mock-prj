@@ -15,6 +15,7 @@ var transTree = {};
 var storeTemplateTree = {};
 var currentTree = null;
 var transDict = {};
+var isInitTree = true;
 
 var parent;
 // var fieldName = 'luAnc1ServerData';
@@ -39,28 +40,30 @@ app.use(function (req, res, next) {
 });
 
 
-app.post("/getTree/", function(req, res) {
+// app.post("/getTree/", function(req, res) {
 
-    res.setHeader('Content-Type', 'application/json');
+//     res.setHeader('Content-Type', 'application/json');
 
-      var fieldName = req.body.fieldName;
+//       var fieldName = req.body.fieldName;
       
-      parseXml(fieldName,transTree).
-      then(tree => {
-        createTransDict(transTree)
-        console.log("transDict")
+//       parseXml(fieldName,transTree).
+//       then(tree => {
+//         if(isInitTree){
+//           createTransDict(transTree)
+//         }
+//         console.log("transDict")
 
-        console.log(transDict)
-        res.json(tree)   
-      })
-      .catch(e=>res.json({"Error":"got Error from parseXML","Exception":e}));
+//         console.log(transDict)
+//         res.json(tree)   
+//       })
+//       .catch(e=>res.json({"Error":"got Error from parseXML","Exception":e}));
     
         
       
 
-  });
+//   });
 
-  app.post("/getTree2/", function(req, res) {
+  app.post("/getTree/", function(req, res) {
 
     res.setHeader('Content-Type', 'application/json');
 
@@ -152,13 +155,14 @@ app.post("/getTree/", function(req, res) {
 
   }
 
-  app.get("/refreshTree/", (request, response) => {
-    console.log("currentTree")
-    console.log(currentTree)
-    response.json(currentTree)
-  });
+  // app.get("/refreshTree/", (request, response) => {
+  //   console.log("currentTree")
+  //   console.log(currentTree)
+  //   response.json(currentTree)
+  // });
   
   function createTransDict(transTree) {
+    this.isInitTree = false
     for (var parent in transTree) {
       var key = parent;
       var values = [];
@@ -168,7 +172,6 @@ app.post("/getTree/", function(req, res) {
         values.push(parentObj)
         transDict[key] = values;
       }else{
-      // console.log(hasChildren(parent, transTree))
 
       for (var child in transTree[parent]) {
         var childObj = {};
