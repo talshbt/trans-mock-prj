@@ -88,7 +88,7 @@ app.post("/getTree/", function(req, res) {
 
       var tree = req.body.tree;
       currentTree = tree;
-      // console.log(currentTree)
+      console.log(currentTree)
      
   });
 
@@ -160,9 +160,14 @@ app.post("/getTree/", function(req, res) {
   
   function createTransDict(transTree) {
     for (var parent in transTree) {
-      var parentObj = {};
       var key = parent;
       var values = [];
+      if(!hasChildren(parent, transTree)){
+        var parentObj = {}
+        parentObj[key] = ""
+        values.push(parentObj)
+        transDict[key] = values;
+      }else{
       // console.log(hasChildren(parent, transTree))
 
       for (var child in transTree[parent]) {
@@ -174,6 +179,7 @@ app.post("/getTree/", function(req, res) {
       transDict[key] = values;
       
     }
+  }
   }
 
   function hasChildren(parent, transTree) {
