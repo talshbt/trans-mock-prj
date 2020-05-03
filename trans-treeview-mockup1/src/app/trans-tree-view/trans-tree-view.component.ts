@@ -32,6 +32,13 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
       
     });
 
+    this.transService.getCurrentTreeEvent.subscribe((formDataObj) => {
+      console.log( formDataObj['form'])
+      console.log( formDataObj['transDict2'])
+     
+      
+    });
+
   }
 
   onSubmit() {
