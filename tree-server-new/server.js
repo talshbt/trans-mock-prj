@@ -46,6 +46,7 @@ app.use(function (req, res, next) {
     res.setHeader('Content-Type', 'application/json');
 
       var fieldName = req.body.fieldName;
+      console.log(isInitTree)
       
       parseXml(fieldName,transTree).
       then(tree => {
@@ -72,7 +73,8 @@ app.use(function (req, res, next) {
     res.setHeader('Content-Type', 'application/json');
 
       var fieldName = req.body.fieldName;
-      
+     if(!isInitTree){
+
       parseXml(fieldName,transTree).
       then(tree => {
        
@@ -87,7 +89,7 @@ app.use(function (req, res, next) {
       })
       .catch(e=>res.json({"Error":"got Error from parseXML","Exception":e}));
     
-        
+    }
       
 
   });
