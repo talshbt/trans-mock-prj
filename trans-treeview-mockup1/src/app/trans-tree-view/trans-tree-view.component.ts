@@ -28,14 +28,26 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
     this.transService.getTreeEvent.subscribe((formDataObj) => {
       this.form = formDataObj['form']
       this.transTree = formDataObj['transDict2']
+
+      // console.log("------------formDataObj['transDict2']-------------1")
+      // console.log( this.transTree)
      
       
     });
 
     this.transService.getCurrentTreeEvent.subscribe((formDataObj) => {
-      console.log( formDataObj['form'])
-      console.log( formDataObj['transDict2'])
-     
+
+      // console.log( formDataObj['form'])
+      // console.log("------------formDataObj['transDict2']-------------1")
+      // console.log( this.transTree)
+
+      // console.log("------------------------------------")
+
+      // console.log("------------formDataObj['transDict2']-------------2")
+
+      // console.log( formDataObj['transDict2'])
+      // console.log("------------------------------------")
+
       
     });
 
@@ -43,7 +55,7 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
 
   onSubmit() {
 
-    console.log(this.form.value)
+    // console.log(this.form.value)
 
     this.transService.getTreeFromClient(this.form.value)
 

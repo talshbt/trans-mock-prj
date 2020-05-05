@@ -22,7 +22,7 @@ export class TransInputComponent {
 
     const transDetails = this.setTransDetails(form);
 
-    console.log(form.value.transName)
+    // console.log(form.value.transName)
     this.handleTreeComponent(transDetails);
     // this.treeTransMockupService.getTreeFromDb(form.value.transName)
     this.treeTransMockupService.getTreeFromDb(form.value.transName)
