@@ -72,24 +72,22 @@ app.use(function (req, res, next) {
 
     res.setHeader('Content-Type', 'application/json');
 
-      var fieldName = req.body.fieldName;
-     if(!isInitTree){
-
-      parseXml(fieldName,transTree).
-      then(tree => {
-       
-          res.json(currentTree)
-        
-        
-
-        //  console.log("transDict")
-
-        //  console.log(currentTree)
-        // res.json(transDict)   
-      })
-      .catch(e=>res.json({"Error":"got Error from parseXML","Exception":e}));
+    var fieldName = req.body.fieldName;
+    console.log(isInitTree)
     
-    }
+    parseXml(fieldName,transTree).
+    then(tree => {
+        // createTransDict(transTree)
+        res.json(currentTree)
+    
+      
+
+      //  console.log("transDict")
+
+      //  console.log(currentTree)
+      // res.json(transDict)   
+    })
+    .catch(e=>res.json({"Error":"got Error from parseXML","Exception":e}));
       
 
   });
@@ -98,13 +96,53 @@ app.use(function (req, res, next) {
 
 
   app.post("/postTree/", function(req, res) {
-
+    var obj = {}
     res.setHeader('Content-Type', 'application/json');
 
       var tree = req.body.tree;
       currentTree = tree;
+    // console.log(transDict['anqnlc1wnigreretData'])
+
+    var arr = transDict['anqnlc1wnigreretData'];
+    var arr2 = Object.keys(arr[0]);
+    // var keys = Object.keys(transDict['anqnlc1wnigreretData'])
+     console.log(arr2[0])
+  
+    // for(var x in arr){
+    //   console.log(arr[x].key)
+    // }
+
+
+      for (var parent in transDict) {
+
+        //  console.log(transDict[parent])
+        // var key = parent;
+        // var values = [];
+        if(!hasChildren(parent, transTree)){
+          
+          // var parentObj = {}
+          // parentObj[key] = ""
+          // values.push(parentObj)
+          // transDict[key] = values;
+
+        }else{
+  
+        for (var child in transDict[parent]) {
+          // console.log(transTree[parent][child])
+          // var childObj = {};
+          // childObj[transTree[parent][child]] = "";
+          // values.push(childObj);
+        }
+    
+        // transDict[key] = values;
+        
+      }
+    }
+
+
+
       // transDict = tree;
-       console.log(currentTree)
+      //  console.log(currentTree)
      
   });
 
