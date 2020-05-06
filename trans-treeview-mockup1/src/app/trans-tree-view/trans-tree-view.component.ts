@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { Subscription } from "rxjs";
 import { TreeTransMockupService } from "../shared/tree-trans-mockup.service";
 import { TableTransMockupService } from "../shared/table-trans-mockup.service";
+import { TableComponent } from "../table-trans-mockup/table/table.component";
+import { ModalService } from "../shared/modal.service";
 
 @Component({
   selector: "app-trans-tree-view",
@@ -15,7 +17,10 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
   private transName = null;
   private tatSherutName = null;
   constructor(
-    private transService: TreeTransMockupService, private tableTransMockupService: TableTransMockupService
+    private transService: TreeTransMockupService,
+    private tableTransMockupService: TableTransMockupService,
+    private modalService: ModalService,
+
   ) {}
   ngOnInit() {
     this.subscription = this.transService.detailsChanged.subscribe((data) => {
@@ -50,7 +55,8 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
   onOpenTable(parent){
     console.log(parent)
     this.tableTransMockupService.getCols2(parent)
-
+    // this.tableTransMockupService.getCols2();
+    this.modalService.openModal(TableComponent, "lg");
 
   }
 }
