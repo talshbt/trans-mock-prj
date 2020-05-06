@@ -101,51 +101,68 @@ app.use(function (req, res, next) {
 
       var tree = req.body.tree;
       currentTree = tree;
-    // console.log(transDict['anqnlc1wnigreretData'])
+      // console.log(currentTree)
+      var arrOfDictChild = currentTree["anqnlc1wnigreretData"];
+      console.log(Object.keys(arrOfDictChild[0]).length)
 
-    var arr = transDict['anqnlc1wnigreretData'];
-    var arr2 = Object.keys(arr[0]);
-    // var keys = Object.keys(transDict['anqnlc1wnigreretData'])
-     console.log(arr2[0])
-  
-    // for(var x in arr){
-    //   console.log(arr[x].key)
-    // }
+      // var arrOfDictChildEx = transDict[parent];
+
+      for (var parent in currentTree) {
 
 
-      for (var parent in transDict) {
+        var key = parent;
+        console.log("parent:" + parent )
+        var arrOfDictChild = currentTree[parent][0];
+        var arrOfKeys = Object.keys(arrOfDictChild);
+        var values = [];
 
-        //  console.log(transDict[parent])
-        // var key = parent;
-        // var values = [];
-        if(!hasChildren(parent, transTree)){
-          
-          // var parentObj = {}
-          // parentObj[key] = ""
-          // values.push(parentObj)
-          // transDict[key] = values;
-
-        }else{
-  
-        for (var child in transDict[parent]) {
-          // console.log(transTree[parent][child])
-          // var childObj = {};
-          // childObj[transTree[parent][child]] = "";
-          // values.push(childObj);
-        }
-    
-        // transDict[key] = values;
-        
+      // console.log(arrOfKeys)
+      for(var x  of arrOfKeys){
+        var childObj = {};
+        console.log(arrOfDictChild[x])
+        // console.log(x)
+        childObj[x] = arrOfDictChild[x];
+        values.push(childObj)
       }
+
+      transDict[key] = values;
+
+        // console.log("-----------")
+   
+      
     }
 
 
+    console.log(transDict)
 
-      // transDict = tree;
-      //  console.log(currentTree)
+
+    
      
   });
 
+  function createTransDict(transTree) {
+    isInitTree = false
+    for (var parent in transTree) {
+      var key = parent;
+      var values = [];
+      if(!hasChildren(parent, transTree)){
+        var parentObj = {}
+        parentObj[key] = ""
+        values.push(parentObj)
+        transDict[key] = values;
+      }else{
+
+      for (var child in transTree[parent]) {
+        var childObj = {};
+        childObj[transTree[parent][child]] = "";
+        values.push(childObj);
+      }
+  
+      transDict[key] = values;
+      
+    }
+  }
+  }
 
   app.post("/storeTree/", function(req, res) {
 
@@ -212,29 +229,6 @@ app.use(function (req, res, next) {
   //   response.json(currentTree)
   // });
   
-  function createTransDict(transTree) {
-    isInitTree = false
-    for (var parent in transTree) {
-      var key = parent;
-      var values = [];
-      if(!hasChildren(parent, transTree)){
-        var parentObj = {}
-        parentObj[key] = ""
-        values.push(parentObj)
-        transDict[key] = values;
-      }else{
-
-      for (var child in transTree[parent]) {
-        var childObj = {};
-        childObj[transTree[parent][child]] = "";
-        values.push(childObj);
-      }
-  
-      transDict[key] = values;
-      
-    }
-  }
-  }
 
   function hasChildren(parent, transTree) {
     return transTree[parent].length > 0;
