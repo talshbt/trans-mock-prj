@@ -50,7 +50,11 @@ app.use(function (req, res, next) {
       
       parseXml(fieldName,transTree).
       then(tree => {
-          createTransDict(transTree)
+        
+        if(isInitTree){
+          initTransTree(transTree)
+        }
+          console.log(transDict)
           res.json(transDict)
       
         
@@ -77,7 +81,7 @@ app.use(function (req, res, next) {
     
     parseXml(fieldName,transTree).
     then(tree => {
-        // createTransDict(transTree)
+        // initTransTree(transTree)
         res.json(currentTree)
     
       
@@ -101,46 +105,42 @@ app.use(function (req, res, next) {
 
       var tree = req.body.tree;
       currentTree = tree;
-      // console.log(currentTree)
-      var arrOfDictChild = currentTree["anqnlc1wnigreretData"];
-      console.log(Object.keys(arrOfDictChild[0]).length)
-
-      // var arrOfDictChildEx = transDict[parent];
-
-      for (var parent in currentTree) {
+      fillTransTree(currentTree)
 
 
-        var key = parent;
-        console.log("parent:" + parent )
-        var arrOfDictChild = currentTree[parent][0];
-        var arrOfKeys = Object.keys(arrOfDictChild);
-        var values = [];
 
-      // console.log(arrOfKeys)
-      for(var x  of arrOfKeys){
-        var childObj = {};
-        console.log(arrOfDictChild[x])
-        // console.log(x)
-        childObj[x] = arrOfDictChild[x];
-        values.push(childObj)
-      }
-
-      transDict[key] = values;
-
-        // console.log("-----------")
-   
-      
-    }
-
-
-    console.log(transDict)
 
 
     
      
   });
 
-  function createTransDict(transTree) {
+  function fillTransTree(currentTree){
+    for (var parent in currentTree) {
+
+
+      var key = parent;
+      var arrOfDictChild = currentTree[parent][0];
+      var arrOfKeys = Object.keys(arrOfDictChild);
+      var values = [];
+
+    for(var x  of arrOfKeys){
+      var childObj = {};
+      childObj[x] = arrOfDictChild[x];
+      values.push(childObj)
+    }
+
+    transDict[key] = values;
+
+ 
+    
+  }
+
+
+  // console.log(transDict)
+  }
+
+  function initTransTree(transTree) {
     isInitTree = false
     for (var parent in transTree) {
       var key = parent;
