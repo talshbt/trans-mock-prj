@@ -56,13 +56,7 @@ app.use(function (req, res, next) {
         }
           console.log(transDict)
           res.json(transDict)
-      
-        
 
-        //  console.log("transDict")
-
-        //  console.log(currentTree)
-        // res.json(transDict)   
       })
       .catch(e=>res.json({"Error":"got Error from parseXML","Exception":e}));
     
@@ -81,15 +75,8 @@ app.use(function (req, res, next) {
     
     parseXml(fieldName,transTree).
     then(tree => {
-        // initTransTree(transTree)
         res.json(currentTree)
     
-      
-
-      //  console.log("transDict")
-
-      //  console.log(currentTree)
-      // res.json(transDict)   
     })
     .catch(e=>res.json({"Error":"got Error from parseXML","Exception":e}));
       
@@ -106,13 +93,7 @@ app.use(function (req, res, next) {
       var tree = req.body.tree;
       currentTree = tree;
       fillTransTree(currentTree)
-
-
-
-
-
-    
-     
+  
   });
 
   function fillTransTree(currentTree){
@@ -240,6 +221,25 @@ app.use(function (req, res, next) {
   var cols = ["id", "x", "y", "z"];
   var id = 0;
 
+
+  function getColsFromTransDict(parent){
+
+    var keys = []
+    // console.log("-------------------------")
+    var arrOfDictChild = transDict[parent];
+    for(var x of arrOfDictChild){
+      
+      // console.log(Object.keys(x)[0])
+      keys.push(Object.keys(x)[0])
+    }
+    // console.log(arrOfDictChild)
+
+    // console.log("-------------------------")
+
+     return keys;
+
+  }
+
   app.post("/addNewRow/", function (req, res) {
     res.setHeader("Content-Type", "application/json");
   
@@ -263,8 +263,18 @@ app.get("/getRows/", (request, response) => {
 });
 
 app.get("/getCols/", (request, response) => {
+  
   response.end(JSON.stringify(cols.slice()));
 });
+
+app.post("/getCols2/", (request, response) => {
+  var parentName = request.body.parentName;
+  console.log(parentName)
+  var parentCols = getColsFromTransDict(parentName)
+  console.log(parentCols)
+   response.end(JSON.stringify(parentCols.slice()));
+});
+
 
 app.post("/removeRow/", function (req, res) {
   var rowToRemove = req.body.rowToRemove;
