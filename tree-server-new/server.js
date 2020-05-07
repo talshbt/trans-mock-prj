@@ -218,7 +218,7 @@ app.use(function (req, res, next) {
   /*************************For Table*******************************/
   var newRow = [];
   var rows = [];
-  var cols = ["id", "x", "y", "z"];
+  var cols = ["id", "xdfgdf", "ydfgdfg", "zgggg","dfdfs","xdfgdf", "ydfgdfg", "zgggg","dfdfs", "xdfgdf", "ydfgdfg", "zgggg","dfdfs"];
   var id = 0;
 
 
@@ -263,16 +263,20 @@ app.get("/getRows/", (request, response) => {
 });
 
 app.get("/getCols/", (request, response) => {
-  
-  response.end(JSON.stringify(cols.slice()));
+  var colsWithId = ['id']
+  Array.prototype.push.apply(colsWithId, cols);
+  // console.log(colsWithId)
+  response.end(JSON.stringify(colsWithId.slice()));
 });
 
 app.post("/getCols2/", (request, response) => {
   var parentName = request.body.parentName;
-  console.log(parentName)
-  var parentCols = getColsFromTransDict(parentName)
-  console.log(parentCols)
-   response.end(JSON.stringify(parentCols.slice()));
+  // console.log(parentName)
+  // var parentCols = getColsFromTransDict(parentName)
+  // console.log(parentCols)
+  cols = getColsFromTransDict(parentName);
+
+   response.end(JSON.stringify(cols.slice()));
 });
 
 
