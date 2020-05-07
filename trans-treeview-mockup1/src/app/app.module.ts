@@ -13,6 +13,11 @@ import { AddItemComponent } from './table-trans-mockup/add-item/add-item.compone
 import { NgModalComponent } from './table-trans-mockup/ng-modal/ng-modal.component';
 import { FilterPipe } from './shared/filter.pipe';
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
+import { ParentTableComponent } from './parent-table/parent-table.component';
+import { AddNewItemComponent } from './parent-table/add-new-item/add-new-item.component';
+import { NgModalTableComponent } from './parent-table/ng-modal-table/ng-modal-table.component';
+import { TableTransComponent } from './parent-table/table-trans/table-trans.component';
+import { RowTransComponent } from './parent-table/table-trans/row-trans/row-trans.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +29,12 @@ import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
     RowComponent,
     AddItemComponent,
     NgModalComponent,
-    FilterPipe
+    FilterPipe,
+    ParentTableComponent,
+    AddNewItemComponent,
+    NgModalTableComponent,
+    TableTransComponent,
+    RowTransComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +43,7 @@ import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
     ReactiveFormsModule,
     FormsModule
   ],
-  entryComponents: [TransTreeViewComponent, NgModalComponent, AddItemComponent, TableComponent],
+  entryComponents: [NgModalTableComponent, AddNewItemComponent, NgModalComponent, AddNewItemComponent, TableComponent, TransTreeViewComponent, NgModalComponent, AddItemComponent, TableComponent, TableTransComponent],
   providers: [],
   bootstrap: [AppComponent],
   

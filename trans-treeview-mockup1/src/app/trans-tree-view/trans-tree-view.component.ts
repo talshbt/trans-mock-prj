@@ -56,6 +56,7 @@ export class TransTreeViewComponent implements OnInit, OnDestroy {
     console.log(parent)
     this.tableTransMockupService.getCols2(parent)
     // this.tableTransMockupService.getCols2();
+    
     this.modalService.openModal(TableComponent, "lg");
 
   }

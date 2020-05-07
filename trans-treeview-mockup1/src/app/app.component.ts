@@ -20,8 +20,8 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
   }
 
-  openModal() {
-    this.tableService.initCols();
-    this.modalService.openModal(TableComponent, "lg");
-  }
+  // openModal() {
+  //   this.tableService.initCols();
+  //   this.modalService.openModal(TableComponent, "xl");
+  // }
 }
